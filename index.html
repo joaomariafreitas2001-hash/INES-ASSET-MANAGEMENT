@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alpha Ridge Capital — ESADE Asset Management</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Georgia:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy:    #051C2C;
+    --navy-l:  #0D3350;
+    --blue:    #2166AC;
+    --green:   #1A7A4A;
+    --red:     #D6604D;
+    --amber:   #D6804D;
+    --white:   #FFFFFF;
+    --offwh:   #F7F8FA;
+    --lgray:   #EDEEF1;
+    --dgray:   #333333;
+    --mgray:   #7A8A9A;
+    --border:  #D8DCE2;
+  }
+
+  html { scroll-behavior: smooth; font-size: 16px; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--offwh);
+    color: var(--dgray);
+    line-height: 1.6;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--navy);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 2.5rem; height: 52px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+  }
+  .nav-brand { color: var(--white); font-family: Georgia, serif; font-size: 1.05rem; font-weight: 700; letter-spacing: 0.04em; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { color: #8AABB8; text-decoration: none; font-size: 0.82rem; font-weight: 500; letter-spacing: 0.03em; transition: color .2s; }
+  .nav-links a:hover { color: var(--white); }
+
+  /* ── SECTIONS ── */
+  section { padding: 5rem 0; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 2.5rem; }
+
+  h2 { font-family: Georgia, serif; font-size: 2rem; font-weight: 700; color: var(--navy); margin-bottom: 0.5rem; }
+  h3 { font-family: Georgia, serif; font-size: 1.25rem; font-weight: 700; color: var(--navy); margin-bottom: 0.5rem; }
+  .section-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; color: var(--blue); text-transform: uppercase; margin-bottom: 0.75rem; }
+  .section-sub { font-size: 1rem; color: var(--mgray); margin-bottom: 3rem; max-width: 680px; }
+  .divider { width: 48px; height: 3px; background: var(--blue); margin: 1rem 0 2.5rem; border-radius: 2px; }
+
+  /* ── HERO ── */
+  #hero {
+    background: var(--navy);
+    padding: 7rem 0 5rem;
+    position: relative; overflow: hidden;
+  }
+  #hero::before {
+    content: ''; position: absolute; left: -60px; top: -40px;
+    font-family: Georgia, serif; font-size: 28rem; font-weight: 700;
+    color: rgba(13,51,80,0.6); line-height: 1;
+    pointer-events: none; user-select: none;
+    content: 'CTA';
+  }
+  .hero-inner { position: relative; z-index: 1; }
+  .hero-badge { display: inline-block; background: var(--blue); color: var(--white); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; padding: 0.3rem 0.9rem; border-radius: 20px; margin-bottom: 1.5rem; text-transform: uppercase; }
+  .hero-title { font-family: Georgia, serif; font-size: 3.4rem; font-weight: 700; color: var(--white); line-height: 1.15; margin-bottom: 1rem; }
+  .hero-sub { font-size: 1.1rem; color: #8AABB8; margin-bottom: 2.5rem; max-width: 560px; }
+  .hero-meta { font-size: 0.82rem; color: #4A6880; margin-top: 2.5rem; }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; margin-top: 3rem; }
+  .kpi-card {
+    background: rgba(13,51,80,0.5);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 8px; padding: 1.4rem 1.2rem;
+  }
+  .kpi-val { font-family: Georgia, serif; font-size: 2.2rem; font-weight: 700; color: var(--white); }
+  .kpi-val.pos { color: #5BC87A; }
+  .kpi-val.neg { color: #E88070; }
+  .kpi-lbl { font-size: 0.78rem; color: #6A8CA0; margin-top: 0.35rem; font-weight: 500; letter-spacing: 0.02em; }
+
+  /* ── ASSIGNMENT ── */
+  #assignment { background: var(--white); }
+  .assign-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+  .info-box { background: var(--offwh); border: 1px solid var(--border); border-radius: 8px; padding: 1.6rem; }
+  .info-box h3 { font-size: 1rem; margin-bottom: 1rem; }
+  .info-box ul { list-style: none; padding: 0; }
+  .info-box li { display: flex; align-items: flex-start; gap: 0.6rem; font-size: 0.9rem; color: var(--dgray); padding: 0.4rem 0; border-bottom: 1px solid var(--border); }
+  .info-box li:last-child { border-bottom: none; }
+  .bullet { width: 6px; height: 6px; background: var(--blue); border-radius: 50%; margin-top: 0.55rem; flex-shrink: 0; }
+  .tag { display: inline-block; background: var(--lgray); border-radius: 4px; padding: 0.15rem 0.55rem; font-size: 0.75rem; font-weight: 600; color: var(--navy); margin-right: 0.3rem; }
+  .tag.deadline { background: #FFF0EE; color: var(--red); }
+
+  /* ── JOURNEY ── */
+  #journey { background: var(--offwh); }
+  .timeline { position: relative; padding-left: 2.5rem; }
+  .timeline::before { content: ''; position: absolute; left: 11px; top: 0; bottom: 0; width: 2px; background: var(--border); }
+  .tl-item { position: relative; margin-bottom: 2.5rem; }
+  .tl-dot {
+    position: absolute; left: -2.5rem; top: 0.35rem;
+    width: 24px; height: 24px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.7rem; font-weight: 700; color: var(--white);
+  }
+  .tl-dot.blue { background: var(--blue); }
+  .tl-dot.red  { background: var(--red); }
+  .tl-dot.green{ background: var(--green); }
+  .tl-dot.navy { background: var(--navy); }
+  .tl-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; color: var(--mgray); text-transform: uppercase; margin-bottom: 0.3rem; }
+  .tl-title { font-family: Georgia, serif; font-size: 1.15rem; font-weight: 700; color: var(--navy); margin-bottom: 0.5rem; }
+  .tl-body { font-size: 0.9rem; color: var(--dgray); max-width: 680px; }
+  .result-pill {
+    display: inline-block; border-radius: 20px; padding: 0.2rem 0.8rem;
+    font-size: 0.78rem; font-weight: 700; margin: 0.4rem 0.3rem 0 0;
+  }
+  .pill-red   { background: #FFF0EE; color: var(--red); }
+  .pill-green { background: #EFF8F3; color: var(--green); }
+  .pill-blue  { background: #EEF3FA; color: var(--blue); }
+  .pill-gray  { background: var(--lgray); color: var(--navy); }
+
+  /* ── STRATEGY ── */
+  #strategy { background: var(--white); }
+  .strategy-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+  .s-card { background: var(--offwh); border: 1px solid var(--border); border-left: 4px solid var(--blue); border-radius: 0 8px 8px 0; padding: 1.5rem; }
+  .s-card.accent-navy { border-left-color: var(--navy); }
+  .s-card.accent-green{ border-left-color: var(--green); }
+  .s-card h3 { font-size: 1rem; margin-bottom: 0.75rem; }
+  .s-card p  { font-size: 0.9rem; color: var(--dgray); }
+  .formula-box { background: var(--navy); border-radius: 8px; padding: 1.5rem 2rem; margin: 1.5rem 0; }
+  .formula-box code { color: #7EC8E3; font-family: 'Courier New', monospace; font-size: 0.95rem; line-height: 2; display: block; }
+  .formula-box .formula-label { color: #4A7090; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.75rem; }
+  .etf-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+  .etf-table th { background: var(--navy); color: var(--white); padding: 0.55rem 0.8rem; text-align: left; font-weight: 600; font-size: 0.82rem; }
+  .etf-table td { padding: 0.45rem 0.8rem; border-bottom: 1px solid var(--border); }
+  .etf-table tr:nth-child(even) td { background: var(--offwh); }
+  .etf-ticker { font-weight: 700; color: var(--blue); font-family: monospace; }
+  .asset-tag { font-size: 0.72rem; padding: 0.15rem 0.5rem; border-radius: 10px; font-weight: 600; }
+  .at-eq   { background: #EEF3FA; color: var(--blue); }
+  .at-bond { background: #EFF8F3; color: var(--green); }
+  .at-cmd  { background: #FFF8EE; color: var(--amber); }
+  .at-fx   { background: #F5EFFE; color: #7040C0; }
+
+  /* ── RESULTS ── */
+  #results { background: var(--offwh); }
+  .results-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin-bottom: 2rem; }
+  .results-table th { background: var(--navy); color: var(--white); padding: 0.6rem 0.9rem; text-align: center; font-weight: 600; font-size: 0.82rem; }
+  .results-table th:first-child { text-align: left; }
+  .results-table td { padding: 0.5rem 0.9rem; border-bottom: 1px solid var(--border); text-align: center; font-size: 0.87rem; }
+  .results-table td:first-child { text-align: left; font-weight: 500; }
+  .results-table tr:nth-child(even) td { background: var(--white); }
+  .results-table tr.strategy td { background: #EEF3FA; }
+  .results-table tr.oos td:nth-child(4) { font-weight: 700; color: var(--blue); }
+  .positive { color: var(--green); font-weight: 600; }
+  .negative { color: var(--red); font-weight: 600; }
+  .chart-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 2rem 0; }
+  .chart-box { background: var(--white); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+  .chart-box img { width: 100%; display: block; }
+  .chart-caption { padding: 0.75rem 1rem; font-size: 0.78rem; color: var(--mgray); border-top: 1px solid var(--border); }
+  .chart-full { background: var(--white); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 1.5rem 0; }
+  .chart-full img { width: 100%; display: block; }
+  .stress-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; margin: 2rem 0; }
+  .stress-card { border-radius: 8px; overflow: hidden; border: 1px solid var(--border); }
+  .stress-header { padding: 0.85rem 1rem; font-weight: 700; font-size: 0.88rem; }
+  .stress-body { padding: 0.85rem 1rem; background: var(--white); }
+  .stress-stat { font-family: Georgia, serif; font-size: 1.8rem; font-weight: 700; }
+  .stress-vs { font-size: 0.82rem; color: var(--mgray); margin-top: 0.25rem; }
+  .sh-red  { background: #FFF0EE; color: var(--red); }
+  .sh-blue { background: #EEF3FA; color: var(--blue); }
+  .sh-green{ background: #EFF8F3; color: var(--green); }
+
+  /* ── ALLOCATOR ── */
+  #allocator { background: var(--white); }
+  .alloc-layout { display: grid; grid-template-columns: 1fr 420px; gap: 3rem; align-items: start; }
+  .slider-wrap { margin: 1.5rem 0; }
+  .slider-wrap label { font-size: 0.88rem; font-weight: 600; color: var(--navy); display: flex; justify-content: space-between; margin-bottom: 0.6rem; }
+  .slider-wrap label span { color: var(--blue); font-family: Georgia, serif; font-size: 1rem; }
+  input[type=range] { width: 100%; accent-color: var(--blue); height: 6px; cursor: pointer; }
+  .alloc-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.5rem 0; }
+  .metric-box { background: var(--offwh); border: 1px solid var(--border); border-radius: 8px; padding: 1.1rem; text-align: center; }
+  .metric-val { font-family: Georgia, serif; font-size: 1.9rem; font-weight: 700; }
+  .metric-lbl { font-size: 0.78rem; color: var(--mgray); margin-top: 0.25rem; }
+  .metric-delta { font-size: 0.78rem; font-weight: 700; margin-top: 0.2rem; }
+  .d-pos { color: var(--green); } .d-neg { color: var(--red); }
+  .crisis-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin-top: 1.5rem; }
+  .crisis-table th { background: var(--navy); color: var(--white); padding: 0.5rem 0.75rem; text-align: center; font-size: 0.8rem; }
+  .crisis-table th:first-child { text-align: left; }
+  .crisis-table td { padding: 0.45rem 0.75rem; border-bottom: 1px solid var(--border); text-align: center; }
+  .crisis-table td:first-child { text-align: left; font-weight: 500; }
+  .chart-canvas-wrap { background: var(--offwh); border: 1px solid var(--border); border-radius: 8px; padding: 1.2rem; }
+
+  /* ── METHODOLOGY ── */
+  #methodology { background: var(--offwh); }
+  .method-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5rem; }
+  .method-card { background: var(--white); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; }
+  .method-card h3 { font-size: 0.95rem; margin-bottom: 0.75rem; }
+  .method-card p, .method-card li { font-size: 0.87rem; color: var(--dgray); }
+  .method-card ul { padding-left: 1.2rem; }
+  .method-card li { margin-bottom: 0.35rem; }
+  .bias-table { width: 100%; border-collapse: collapse; font-size: 0.87rem; margin-top: 2rem; }
+  .bias-table th { background: var(--navy); color: var(--white); padding: 0.55rem 0.9rem; text-align: left; font-size: 0.82rem; }
+  .bias-table td { padding: 0.5rem 0.9rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .bias-table tr:nth-child(even) td { background: var(--white); }
+
+  /* ── Q&A ── */
+  #qa { background: var(--white); }
+  .qa-item { border: 1px solid var(--border); border-radius: 8px; margin-bottom: 0.75rem; overflow: hidden; }
+  .qa-q {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.1rem 1.4rem; cursor: pointer; background: var(--white);
+    font-weight: 600; font-size: 0.93rem; color: var(--navy);
+    transition: background .2s; user-select: none;
+  }
+  .qa-q:hover { background: var(--offwh); }
+  .qa-q .chevron { transition: transform .2s; font-size: 0.75rem; color: var(--mgray); }
+  .qa-a { display: none; padding: 1rem 1.4rem 1.2rem; background: var(--offwh); font-size: 0.9rem; color: var(--dgray); border-top: 1px solid var(--border); line-height: 1.7; }
+  .qa-item.open .qa-q { background: var(--offwh); }
+  .qa-item.open .chevron { transform: rotate(180deg); }
+  .qa-item.open .qa-a { display: block; }
+
+  /* ── REFS ── */
+  #refs { background: var(--navy); padding: 3.5rem 0; }
+  #refs h2 { color: var(--white); }
+  #refs .divider { background: rgba(255,255,255,0.3); }
+  .ref-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.25rem; }
+  .ref-card { background: rgba(13,51,80,0.6); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 1.3rem; }
+  .ref-card .ref-authors { font-size: 0.78rem; color: #6A8CA0; margin-bottom: 0.3rem; font-style: italic; }
+  .ref-card .ref-title { font-size: 0.9rem; color: var(--white); font-weight: 600; margin-bottom: 0.4rem; }
+  .ref-card .ref-journal { font-size: 0.78rem; color: #8AABB8; }
+
+  /* ── FOOTER ── */
+  footer { background: #03111C; padding: 2rem 0; text-align: center; color: #3A5568; font-size: 0.78rem; }
+
+  /* ── UTILS ── */
+  .text-blue  { color: var(--blue); }
+  .text-green { color: var(--green); }
+  .text-red   { color: var(--red); }
+  .bold       { font-weight: 700; }
+  .disclaimer { font-size: 0.75rem; color: var(--mgray); background: var(--lgray); border-radius: 6px; padding: 0.75rem 1rem; margin-top: 1.5rem; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-brand">Alpha Ridge Capital</span>
+  <ul class="nav-links">
+    <li><a href="#assignment">Assignment</a></li>
+    <li><a href="#journey">Our Journey</a></li>
+    <li><a href="#strategy">Strategy</a></li>
+    <li><a href="#results">Results</a></li>
+    <li><a href="#allocator">Allocator Case</a></li>
+    <li><a href="#methodology">Methodology</a></li>
+    <li><a href="#qa">Q&amp;A Prep</a></li>
+    <li><a href="#refs">References</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="container hero-inner">
+    <span class="hero-badge">ESADE Asset Management &nbsp;|&nbsp; Group Project</span>
+    <h1 class="hero-title">Alpha Ridge Capital</h1>
+    <p class="hero-sub">Multi-Asset Trend-Following CTA Strategy &mdash; simulated quant fund pitch raising USD&nbsp;100M</p>
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-val pos">+5.86%</div>
+        <div class="kpi-lbl">Net CAGR &mdash; Full Period</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-val">0.41</div>
+        <div class="kpi-lbl">Sharpe Ratio &mdash; Net</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-val pos">+21.6%</div>
+        <div class="kpi-lbl">GFC 2008&ndash;09 Return</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-val neg">-30.6%</div>
+        <div class="kpi-lbl">Maximum Drawdown</div>
+      </div>
+    </div>
+    <p class="hero-meta">Back-test period: 2006&ndash;2024 &nbsp;&bull;&nbsp; In-sample: 2006&ndash;2019 &nbsp;&bull;&nbsp; OOS: 2020&ndash;2024 &nbsp;&bull;&nbsp; Universe: 10 liquid ETFs &nbsp;&bull;&nbsp; Live pitch: 10 June 2025</p>
+    <p class="disclaimer" style="margin-top:1.5rem; background:rgba(255,255,255,0.05); color:#4A6880;">
+      All returns are <strong style="color:#6A8CA0">simulated back-tests</strong>. No live track record exists. Past simulated performance is not indicative of future results. Presented for academic purposes only.
+    </p>
+  </div>
+</section>
+
+<!-- ASSIGNMENT -->
+<section id="assignment">
+  <div class="container">
+    <p class="section-label">Context</p>
+    <h2>The Assignment</h2>
+    <div class="divider"></div>
+    <p class="section-sub">ESADE Asset Management course &mdash; group project requiring a full quant fund pitch as if raising USD&nbsp;100M from institutional investors.</p>
+    <div class="assign-grid">
+      <div class="info-box">
+        <h3>Deliverables</h3>
+        <ul>
+          <li><span class="bullet"></span><div><span class="tag">1</span> Pitch deck — PDF, max 15 slides</div></li>
+          <li><span class="bullet"></span><div><span class="tag">2</span> Quant appendix — Jupyter notebook with full back-test</div></li>
+          <li><span class="bullet"></span><div><span class="tag deadline">Live 10 Jun</span> Presentation to a panel as if raising capital</div></li>
+        </ul>
+      </div>
+      <div class="info-box">
+        <h3>Requirements</h3>
+        <ul>
+          <li><span class="bullet"></span>Design a systematic (rules-based) investment strategy</li>
+          <li><span class="bullet"></span>Back-test it rigorously with proper IS/OOS split</li>
+          <li><span class="bullet"></span>Show it to a panel of finance professionals</li>
+          <li><span class="bullet"></span>Defend every assumption and parameter choice</li>
+          <li><span class="bullet"></span>Address biases, capacity, and risk explicitly</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- JOURNEY -->
+<section id="journey">
+  <div class="container">
+    <p class="section-label">Decision Log</p>
+    <h2>Our Journey</h2>
+    <div class="divider"></div>
+    <p class="section-sub">We did not start with a CTA strategy. Here is the full record of what we tried, why it failed, and why we switched.</p>
+    <div class="timeline">
+
+      <div class="tl-item">
+        <div class="tl-dot blue">1</div>
+        <div class="tl-label">Phase 1 &mdash; Strategy Design</div>
+        <div class="tl-title">Chose cross-sectional equity long/short on S&P 500</div>
+        <p class="tl-body">
+          We combined three well-documented signals on S&P 500 constituents: 12&minus;1 month price momentum (Jegadeesh &amp; Titman 1993), low realized volatility (Ang et al. 2006), and short-term reversal (Lehmann 1990). Portfolio construction used Hierarchical Risk Parity (L&oacute;pez de Prado 2016). Dollar-neutral, monthly rebalancing, 10 bps/side costs.
+        </p>
+        <div>
+          <span class="result-pill pill-gray">Momentum 12&minus;1</span>
+          <span class="result-pill pill-gray">Low Volatility</span>
+          <span class="result-pill pill-gray">Short-Term Reversal</span>
+          <span class="result-pill pill-gray">HRP Construction</span>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot red">2</div>
+        <div class="tl-label">Phase 2 &mdash; Back-Test Results</div>
+        <div class="tl-title">Negative alpha: &minus;0.80% gross CAGR, Sharpe &minus;0.15</div>
+        <p class="tl-body">
+          The strategy produced negative gross alpha across the full 2015&ndash;2024 period. Only bright spot: 2022 rate-hike cycle (+2.05% net vs SPY &minus;18.2%). The strategy technically worked during the one period where it was supposed to fail (rising rates reduce momentum dispersion).
+        </p>
+        <div>
+          <span class="result-pill pill-red">Gross CAGR &minus;0.80%</span>
+          <span class="result-pill pill-red">Sharpe &minus;0.15</span>
+          <span class="result-pill pill-red">Max DD &minus;21.4%</span>
+          <span class="result-pill pill-green">2022: +2.05% net</span>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot red">3</div>
+        <div class="tl-label">Phase 3 &mdash; Debug Attempt</div>
+        <div class="tl-title">Dropped reversal signal &mdash; results got worse</div>
+        <p class="tl-body">
+          We hypothesised that the short-term reversal signal was contaminating the momentum signal (as per Fama 1996 who argues reversal and momentum are distinct phenomena). We removed it. Results deteriorated: &minus;2.31% gross CAGR, Sharpe &minus;0.30. The reversal signal had actually been partially hedging the momentum losses. <strong>Root cause confirmed: the problem is structural, not signal-level.</strong>
+        </p>
+        <div>
+          <span class="result-pill pill-red">Worse: &minus;2.31% gross</span>
+          <span class="result-pill pill-gray">Root cause: factor crowding</span>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot navy">4</div>
+        <div class="tl-label">Phase 4 &mdash; Root Cause Analysis</div>
+        <div class="tl-title">L/S momentum on large-cap US equities has been crowded since ~2018</div>
+        <p class="tl-body">
+          Cross-sectional equity momentum on US large-caps has underperformed since 2018 due to: (1) extreme factor crowding as smart-beta AUM grew, (2) the 2018 Q4 momentum crash as quant funds de-levered simultaneously, (3) the 2020 COVID momentum reversal. This is a well-documented real-world phenomenon &mdash; not a back-test artefact. The strategy was correctly implemented; the edge simply no longer exists in the same form.
+        </p>
+        <div>
+          <span class="result-pill pill-gray">Factor crowding post-2018</span>
+          <span class="result-pill pill-gray">2018 Q4 momentum crash</span>
+          <span class="result-pill pill-gray">2020 COVID reversal</span>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot green">5</div>
+        <div class="tl-label">Phase 5 &mdash; Strategy Switch</div>
+        <div class="tl-title">Switched to multi-asset trend-following CTA</div>
+        <p class="tl-body">
+          We chose trend-following because: (1) 215 years of documented evidence across asset classes (Hurst et al. 2017), (2) no single-factor crowding &mdash; operates across equities, bonds, commodities, FX, (3) crisis alpha property &mdash; tends to profit exactly when equities crash, (4) intuitive mechanism defensible to any panel. Rebuilt the notebook from scratch.
+        </p>
+        <div>
+          <span class="result-pill pill-green">Net CAGR +5.86%</span>
+          <span class="result-pill pill-green">Sharpe 0.41</span>
+          <span class="result-pill pill-blue">GFC +21.6%</span>
+          <span class="result-pill pill-blue">2022 +10.2%</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- STRATEGY -->
+<section id="strategy">
+  <div class="container">
+    <p class="section-label">How It Works</p>
+    <h2>The Strategy</h2>
+    <div class="divider"></div>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:2.5rem; margin-bottom:2.5rem;">
+      <div>
+        <h3 style="margin-bottom:1rem;">Universe &mdash; 10 Liquid ETFs</h3>
+        <table class="etf-table">
+          <thead><tr><th>Ticker</th><th>Name</th><th>Class</th></tr></thead>
+          <tbody>
+            <tr><td class="etf-ticker">SPY</td><td>S&amp;P 500</td><td><span class="asset-tag at-eq">Equity</span></td></tr>
+            <tr><td class="etf-ticker">QQQ</td><td>Nasdaq 100</td><td><span class="asset-tag at-eq">Equity</span></td></tr>
+            <tr><td class="etf-ticker">IWM</td><td>Russell 2000</td><td><span class="asset-tag at-eq">Equity</span></td></tr>
+            <tr><td class="etf-ticker">EFA</td><td>MSCI EAFE</td><td><span class="asset-tag at-eq">Equity</span></td></tr>
+            <tr><td class="etf-ticker">EEM</td><td>MSCI EM</td><td><span class="asset-tag at-eq">Equity</span></td></tr>
+            <tr><td class="etf-ticker">TLT</td><td>20yr Treasury</td><td><span class="asset-tag at-bond">Bond</span></td></tr>
+            <tr><td class="etf-ticker">IEF</td><td>7-10yr Treasury</td><td><span class="asset-tag at-bond">Bond</span></td></tr>
+            <tr><td class="etf-ticker">GLD</td><td>Gold</td><td><span class="asset-tag at-cmd">Commodity</span></td></tr>
+            <tr><td class="etf-ticker">USO</td><td>Crude Oil</td><td><span class="asset-tag at-cmd">Commodity</span></td></tr>
+            <tr><td class="etf-ticker">UUP</td><td>USD Index</td><td><span class="asset-tag at-fx">FX</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <h3 style="margin-bottom:1rem;">Signal &amp; Sizing</h3>
+        <div class="formula-box">
+          <div class="formula-label">Signal (month-end t, asset i)</div>
+          <code>signal(i,t) = sign( avg(MA10, MA12)(i,t) &minus; Price(i,t) )</code>
+          <code style="color:#5BC87A">+1 &rarr; Long &nbsp;&nbsp; &minus;1 &rarr; Short</code>
+          <br>
+          <div class="formula-label">Position sizing</div>
+          <code>w(i,t) = signal(i,t) &times; (10% / &sigma;&#770;(i,t))</code>
+          <code style="color:#8AABB8">Gross leverage capped at 2&times;</code>
+        </div>
+        <p style="font-size:0.88rem; color:var(--dgray);">Using the <strong>average of two MA windows</strong> (10m and 12m) rather than a single window reduces sensitivity to the exact parameter &mdash; a documented robustness improvement (Hurst et al. 2017). Each asset is sized independently to contribute 10% annualised volatility, so treasury positions are naturally ~3&times; larger than equity positions.</p>
+      </div>
+    </div>
+
+    <div class="strategy-grid">
+      <div class="s-card">
+        <h3>Why dual MA instead of single?</h3>
+        <p>A single 10-month MA generates very similar signals to a 12-month MA but with different exact threshold dates. Using the average of both reduces "threshold sensitivity" &mdash; the chance that a minor parameter choice drives all the performance. This is a robustness argument, not an optimisation.</p>
+      </div>
+      <div class="s-card accent-green">
+        <h3>Why vol-target instead of equal weight?</h3>
+        <p>Equal-weight allocates equal capital but unequal risk. TLT has ~14% annual vol vs SPY's ~18% &mdash; not dramatically different. But crude oil (USO) has ~40% vol. Without vol-targeting, one commodity position would dominate risk. Vol-targeting ensures every asset contributes equally to portfolio risk.</p>
+      </div>
+      <div class="s-card accent-navy">
+        <h3>Why 5 bps transaction cost?</h3>
+        <p>ETF bid-ask spreads for SPY, QQQ, TLT are 1&ndash;2 bps. We use 5 bps per side to be conservative, covering market impact and any execution slippage. At our turnover (~37%/month), this costs approximately 22 bps/month or ~2.6% annually in friction costs.</p>
+      </div>
+      <div class="s-card">
+        <h3>What is the execution protocol?</h3>
+        <p>Signal computed at month-end close of day <em>t</em>. Weights entered at open of day <em>t+1</em> (one business day lag). This strictly prevents look-ahead bias &mdash; we never use any price information that was not available at decision time.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESULTS -->
+<section id="results">
+  <div class="container">
+    <p class="section-label">Back-Test</p>
+    <h2>Performance Results</h2>
+    <div class="divider"></div>
+    <p class="section-sub">2006&ndash;2024 full period, IS/OOS split at 2020-01-01. All returns net of 5 bps/side transaction costs.</p>
+
+    <table class="results-table">
+      <thead>
+        <tr><th></th><th>CAGR</th><th>Ann. Vol</th><th>Sharpe</th><th>Max DD</th><th>Calmar</th><th>Hit Rate</th></tr>
+      </thead>
+      <tbody>
+        <tr class="strategy"><td>Strategy Net &mdash; Full 2006&ndash;24</td><td>5.86%</td><td>14.3%</td><td>0.41</td><td class="negative">&minus;30.6%</td><td>0.19</td><td>59.7%</td></tr>
+        <tr class="strategy"><td>Strategy Net &mdash; IS&nbsp; 2006&ndash;19</td><td>5.44%</td><td>13.8%</td><td>0.39</td><td class="negative">&minus;30.6%</td><td>0.18</td><td>62.1%</td></tr>
+        <tr class="strategy oos"><td><strong>Strategy Net &mdash; OOS 2020&ndash;24</strong></td><td><strong>7.02%</strong></td><td><strong>15.8%</strong></td><td class="text-blue bold">0.45</td><td class="negative"><strong>&minus;29.5%</strong></td><td><strong>0.24</strong></td><td><strong>53.3%</strong></td></tr>
+        <tr><td>60/40 Bench &mdash; Full 2006&ndash;24</td><td>7.90%</td><td>9.4%</td><td>0.84</td><td class="negative">&minus;29.5%</td><td>0.27</td><td>66.8%</td></tr>
+        <tr><td>60/40 Bench &mdash; IS&nbsp; 2006&ndash;19</td><td>7.77%</td><td>8.1%</td><td>0.96</td><td class="negative">&minus;29.5%</td><td>0.26</td><td>68.1%</td></tr>
+        <tr><td>60/40 Bench &mdash; OOS 2020&ndash;24</td><td>8.26%</td><td>12.3%</td><td>0.67</td><td class="negative">&minus;20.5%</td><td>0.40</td><td>63.3%</td></tr>
+      </tbody>
+    </table>
+
+    <div style="background:var(--lgray); border-radius:8px; padding:1rem 1.3rem; font-size:0.9rem; color:var(--navy); margin-bottom:2rem;">
+      <strong>Key insight:</strong> OOS Sharpe (0.45) is <em>higher</em> than IS (0.39) &mdash; no evidence of overfitting. Full-period correlation with 60/40: <strong>&minus;0.02</strong>, confirming genuine diversification rather than equity beta in disguise.
+    </div>
+
+    <div class="chart-full">
+      <img src="equity_curve.png" alt="Equity curve, drawdown, and rolling Sharpe">
+      <div class="chart-caption">Equity curve (top), drawdown underwater chart (middle), and rolling 12-month Sharpe (bottom). Shaded region = OOS period 2020&ndash;2024.</div>
+    </div>
+
+    <h3 style="margin:2rem 0 1rem;">Stress Scenarios</h3>
+    <div class="stress-grid">
+      <div class="stress-card">
+        <div class="stress-header sh-red">GFC 2008&ndash;2009</div>
+        <div class="stress-body">
+          <div class="stress-stat text-green">+21.6%</div>
+          <div class="stress-vs">Strategy CAGR</div>
+          <div class="stress-vs" style="margin-top:0.4rem; color:var(--red);">60/40: &minus;3.9%</div>
+          <p style="font-size:0.82rem; color:var(--mgray); margin-top:0.6rem;">Driven by long TLT, GLD; short EEM, IWM as the crash unfolded.</p>
+        </div>
+      </div>
+      <div class="stress-card">
+        <div class="stress-header sh-blue">COVID-19 2020</div>
+        <div class="stress-body">
+          <div class="stress-stat text-green">+25.9%</div>
+          <div class="stress-vs">Strategy CAGR</div>
+          <div class="stress-vs" style="margin-top:0.4rem;">60/40: +16.0%</div>
+          <p style="font-size:0.82rem; color:var(--mgray); margin-top:0.6rem;">Short USO, EEM pre-crash; long TLT in flight-to-safety phase.</p>
+        </div>
+      </div>
+      <div class="stress-card">
+        <div class="stress-header sh-green">2022 Rate-Hike Cycle</div>
+        <div class="stress-body">
+          <div class="stress-stat text-green">+10.2%</div>
+          <div class="stress-vs">Strategy CAGR</div>
+          <div class="stress-vs" style="margin-top:0.4rem; color:var(--red);">60/40: &minus;16.7%</div>
+          <p style="font-size:0.82rem; color:var(--mgray); margin-top:0.6rem;">Short TLT, IEF (rate duration); long USO, UUP (inflation trades).</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="chart-row" style="margin-top:1.5rem;">
+      <div class="chart-box">
+        <img src="monthly_heatmap.png" alt="Monthly returns heatmap">
+        <div class="chart-caption">Monthly returns heatmap (net). Green = positive month, red = negative.</div>
+      </div>
+      <div class="chart-box">
+        <img src="correlation.png" alt="Correlation matrix">
+        <div class="chart-caption">Return correlation matrix. CTA has near-zero correlation with SPY and 60/40 &mdash; key diversification property.</div>
+      </div>
+    </div>
+    <p class="disclaimer">All returns are simulated. No live track record. Past simulated performance is not indicative of future results.</p>
+  </div>
+</section>
+
+<!-- ALLOCATOR CASE -->
+<section id="allocator">
+  <div class="container">
+    <p class="section-label">The Allocator Case</p>
+    <h2>What Does Adding CTA Do to Your Portfolio?</h2>
+    <div class="divider"></div>
+    <p class="section-sub">A CTA is not sold as a standalone replacement for equities. It is sold as an overlay that improves an existing portfolio's risk-adjusted return. Use the slider to see the impact of any CTA allocation.</p>
+
+    <div class="alloc-layout">
+      <div>
+        <div class="slider-wrap">
+          <label>CTA Allocation &nbsp; <span id="allocPct">20%</span></label>
+          <input type="range" id="allocSlider" min="0" max="40" step="5" value="20">
+        </div>
+        <div class="alloc-metrics">
+          <div class="metric-box">
+            <div class="metric-val" id="mCAGR" style="color:var(--navy)">7.79%</div>
+            <div class="metric-lbl">Blended CAGR</div>
+            <div class="metric-delta" id="dCAGR"></div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-val text-blue" id="mSharpe">1.05</div>
+            <div class="metric-lbl">Sharpe Ratio</div>
+            <div class="metric-delta" id="dSharpe"></div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-val" id="mDD" style="color:var(--red)">-15.4%</div>
+            <div class="metric-lbl">Max Drawdown</div>
+            <div class="metric-delta" id="dDD"></div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-val" id="mVol" style="color:var(--mgray)">7.41%</div>
+            <div class="metric-lbl">Ann. Volatility</div>
+            <div class="metric-delta" id="dVol"></div>
+          </div>
+        </div>
+
+        <h3 style="margin:1.5rem 0 0.75rem;">Crisis performance comparison</h3>
+        <table class="crisis-table">
+          <thead><tr><th>Crisis</th><th>Pure 60/40</th><th id="blendedLabel">80/20 Blended</th><th>Delta</th></tr></thead>
+          <tbody>
+            <tr><td>GFC 2008&ndash;09</td><td class="text-red">&minus;3.9%</td><td id="c1" class="text-green">+1.6%</td><td id="d1" class="text-green">+5.5 pp</td></tr>
+            <tr><td>COVID 2020</td><td>+16.0%</td><td id="c2">+18.5%</td><td id="d2" class="text-green">+2.5 pp</td></tr>
+            <tr><td>2022 Rate-Hike</td><td class="text-red">&minus;16.7%</td><td id="c3" class="text-green">&minus;10.9%</td><td id="d3" class="text-green">+5.8 pp</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <div class="chart-canvas-wrap">
+          <canvas id="allocChart" height="320"></canvas>
+        </div>
+        <p style="font-size:0.78rem; color:var(--mgray); margin-top:0.75rem; text-align:center;">Sharpe ratio (blue) and max drawdown magnitude (red) vs CTA allocation. Dotted line = currently selected.</p>
+      </div>
+    </div>
+    <p class="disclaimer">Blended portfolio = (1&minus;&alpha;) &times; 60/40 + &alpha; &times; CTA, monthly rebalanced. CTA returns net of 5 bps/side. All results are simulated.</p>
+  </div>
+</section>
+
+<!-- METHODOLOGY -->
+<section id="methodology">
+  <div class="container">
+    <p class="section-label">Rigour</p>
+    <h2>Methodology &amp; Limitations</h2>
+    <div class="divider"></div>
+    <div class="method-grid">
+      <div class="method-card">
+        <h3>Data</h3>
+        <ul>
+          <li>Yahoo Finance via <code>yfinance</code> (free, adjusted close)</li>
+          <li>10 ETFs, 2005&ndash;2024, daily prices</li>
+          <li>Forward-filled up to 5 days for missing data</li>
+          <li>No survivorship bias: all ETFs have continuous history</li>
+          <li>Benchmark: 60% SPY + 40% IEF, monthly rebalanced</li>
+        </ul>
+      </div>
+      <div class="method-card">
+        <h3>Back-Test Rules</h3>
+        <ul>
+          <li>Signal at month-end close of day <em>t</em></li>
+          <li>Execution at open of day <em>t+1</em> (1-day lag)</li>
+          <li>IS ends 2019-12-31; OOS starts 2020-01-01</li>
+          <li>Transaction costs: 5 bps per side, one-way</li>
+          <li>Turnover computed as half the sum of absolute weight changes</li>
+          <li>Gross leverage capped at 2&times; NAV</li>
+        </ul>
+      </div>
+      <div class="method-card">
+        <h3>Capacity</h3>
+        <ul>
+          <li>10 ETFs with avg daily volume &gt; $1B each</li>
+          <li>At 1% of ADV: capacity &gt; $10M/day per asset</li>
+          <li>Monthly turnover ~37%; 20 trading days</li>
+          <li>Total capacity estimate: <strong>&gt; $5B</strong></li>
+          <li>USD 100M fund = &lt;2% of capacity &mdash; negligible market impact</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 style="margin:2rem 0 1rem;">Known Biases &amp; Mitigations</h3>
+    <table class="bias-table">
+      <thead><tr><th>Bias</th><th>Direction</th><th>Mitigation</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Look-ahead bias</strong></td><td>Inflates Sharpe</td><td>Signal at <em>t</em>, returns at <em>t+1</em>. Strictly enforced throughout.</td></tr>
+        <tr><td><strong>Parameter overfitting</strong></td><td>Inflates IS Sharpe</td><td>Dual MA (10m+12m) chosen for robustness, not optimisation. OOS Sharpe (0.45) &gt; IS (0.39) confirms no overfitting.</td></tr>
+        <tr><td><strong>Transaction costs</strong></td><td>Deflates net returns</td><td>5 bps/side included. Conservative vs actual 1&ndash;2 bps ETF spreads.</td></tr>
+        <tr><td><strong>Survivorship bias</strong></td><td>Minimal</td><td>All 10 ETFs have continuous history since 2006. None delisted.</td></tr>
+        <tr><td><strong>Slippage &amp; market impact</strong></td><td>Not modelled</td><td>Not material at $100M scale given ETF liquidity (&gt;$1B ADV each).</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- Q&A PREP -->
+<section id="qa">
+  <div class="container">
+    <p class="section-label">Pitch Preparation</p>
+    <h2>Anticipated Panel Questions</h2>
+    <div class="divider"></div>
+    <p class="section-sub">The hardest questions a panel will ask, with prepared answers.</p>
+
+    <div class="qa-item open">
+      <div class="qa-q" onclick="toggleQA(this)">
+        "Your Sharpe is 0.41. The 60/40 benchmark has a Sharpe of 0.84. Why should I give you money?"
+        <span class="chevron">&#9660;</span>
+      </div>
+      <div class="qa-a">
+        The comparison is misleading because we are not competing with 60/40 &mdash; we are <strong>complementing</strong> it. Our strategy has a full-period correlation of <strong>&minus;0.02</strong> with 60/40. Adding a 20% allocation to us raises the blended portfolio's Sharpe from 0.84 to <strong>1.05</strong> while halving maximum drawdown from 29.5% to 15.4%. The CAGR cost is only 11 basis points. The question is not "which is better in isolation" but "what does it do to my existing portfolio in a crisis?" GFC 2008: we returned +21.6% while 60/40 lost 3.9%. That is why you give us money.
+      </div>
+    </div>
+
+    <div class="qa-item">
+      <div class="qa-q" onclick="toggleQA(this)">
+        "What happens to your strategy in a low-volatility, range-bound market?"
+        <span class="chevron">&#9660;</span>
+      </div>
+      <div class="qa-a">
+        This is the known weakness of trend-following: choppy, range-bound markets generate whipsaw losses. When a signal goes long, the asset reverses; when it goes short, the asset reverses again. In our back-test, the strategy underperforms in periods like 2011 and 2015&ndash;2016 which were low-vol and directionless. However, this is precisely the environment where 60/40 tends to perform well. The negative correlation between CTA and 60/40 in these periods is a feature, not a bug &mdash; it means one strategy compensates for the other's weakness.
+      </div>
+    </div>
+
+    <div class="qa-item">
+      <div class="qa-q" onclick="toggleQA(this)">
+        "How do you know this isn't just data-mined? You could have chosen any parameters."
+        <span class="chevron">&#9660;</span>
+      </div>
+      <div class="qa-a">
+        Three answers. First, the OOS Sharpe (0.45, 2020&ndash;2024) is <em>higher</em> than the IS Sharpe (0.39, 2006&ndash;2019) &mdash; data-mining would predict the reverse. Second, the dual MA (10m+12m) was chosen before running the back-test as a robustness improvement documented by Hurst et al. (2017), not selected from a parameter sweep. Third, the academic literature documents trend-following profits across <strong>58 instruments and 215 years</strong> of data (Hurst et al. 2017) &mdash; the strategy predates our dataset by two centuries.
+      </div>
+    </div>
+
+    <div class="qa-item">
+      <div class="qa-q" onclick="toggleQA(this)">
+        "Why not just buy DBMF or KMLM? They are liquid CTA ETFs with daily liquidity."
+        <span class="chevron">&#9660;</span>
+      </div>
+      <div class="qa-a">
+        Fair point. DBMF (iMGP DBi Managed Futures) and KMLM (KFA Mount Lucas Index) are excellent alternatives for retail allocators. Our proposition is different: we offer <strong>custom allocation</strong> with full transparency into every position and signal, <strong>managed accounts</strong> that can be tailored to specific risk/return targets, and <strong>no fee drag at the ETF level</strong> (CTA ETFs charge 0.85&ndash;1.0% on top of an already fee-heavy strategy). For a $100M institutional mandate, direct access is cheaper and more flexible.
+      </div>
+    </div>
+
+    <div class="qa-item">
+      <div class="qa-q" onclick="toggleQA(this)">
+        "Your max drawdown is 30.6%. That is the same as the 60/40 benchmark. What's the point?"
+        <span class="chevron">&#9660;</span>
+      </div>
+      <div class="qa-a">
+        The max drawdowns are numerically similar but occur in <strong>completely different periods</strong>. The 60/40 max drawdown of 29.5% was driven by the 2008&ndash;2009 GFC and 2020 COVID crashes &mdash; equity-driven crises. Our 30.6% drawdown was concentrated in 2008&ndash;2011 and includes a period of prolonged trend-less markets following the crisis. In 2022, when 60/40 lost 16.7%, we made +10.2%. The drawdowns do not coincide. When combined at 80/20, the blended max drawdown drops to <strong>15.4%</strong> &mdash; because the losses do not overlap.
+      </div>
+    </div>
+
+    <div class="qa-item">
+      <div class="qa-q" onclick="toggleQA(this)">
+        "You are only back-testing 10 ETFs. What about futures, FX, and global bonds?"
+        <span class="chevron">&#9660;</span>
+      </div>
+      <div class="qa-a">
+        Correct &mdash; a real-world CTA would trade 50&ndash;100+ instruments across futures markets for equity indices, interest rates, FX, and commodities. We restricted to 10 liquid ETFs because: (1) we have free daily data via Yahoo Finance, (2) ETFs are accessible to institutional investors without futures infrastructure, and (3) the academic evidence for trend-following generalises well to our universe. Adding more instruments would likely improve diversification and Sharpe. This is the conservative version of the strategy.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REFERENCES -->
+<section id="refs">
+  <div class="container">
+    <p class="section-label" style="color:#4A7090;">Academic Foundation</p>
+    <h2>References</h2>
+    <div class="divider"></div>
+    <div class="ref-grid">
+      <div class="ref-card">
+        <div class="ref-authors">Moskowitz, T., Ooi, Y.H. &amp; Pedersen, L. (2012)</div>
+        <div class="ref-title">Time Series Momentum</div>
+        <div class="ref-journal">Journal of Financial Economics, 104(2), 228&ndash;250</div>
+        <p style="font-size:0.8rem; color:#4A6880; margin-top:0.6rem;">Documents TSMOM across 58 futures instruments, 1985&ndash;2009. Establishes the theoretical framework we use.</p>
+      </div>
+      <div class="ref-card">
+        <div class="ref-authors">Hurst, B., Ooi, Y.H. &amp; Pedersen, L. (2017)</div>
+        <div class="ref-title">A Century of Evidence on Trend-Following Investing</div>
+        <div class="ref-journal">Journal of Portfolio Management, 44(1), 15&ndash;29</div>
+        <p style="font-size:0.8rem; color:#4A6880; margin-top:0.6rem;">215 years of trend-following data. Demonstrates robustness across regimes, wars, crises, and asset classes. Our primary academic anchor.</p>
+      </div>
+      <div class="ref-card">
+        <div class="ref-authors">Faber, M. (2007)</div>
+        <div class="ref-title">A Quantitative Approach to Tactical Asset Allocation</div>
+        <div class="ref-journal">Journal of Investing, 16(2), 69&ndash;79</div>
+        <p style="font-size:0.8rem; color:#4A6880; margin-top:0.6rem;">Simple 10-month MA rules applied to 5 asset classes. Foundational paper for the ETF-based trend-following approach we implemented.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <p>Alpha Ridge Capital &mdash; ESADE Asset Management Course &mdash; June 2025</p>
+    <p style="margin-top:0.4rem;">All returns are simulated back-tests. No live track record. Not investment advice. Academic purposes only.</p>
+  </div>
+</footer>
+
+<script>
+// ── Allocation data ─────────────────────────────────────────────
+const allocData = {
+  0:  { cagr:7.90, sharpe:0.84, dd:29.46, vol:9.39  },
+  5:  { cagr:7.89, sharpe:0.90, dd:26.13, vol:8.78  },
+  10: { cagr:7.87, sharpe:0.95, dd:22.68, vol:8.24  },
+  15: { cagr:7.84, sharpe:1.01, dd:19.10, vol:7.78  },
+  20: { cagr:7.79, sharpe:1.05, dd:15.40, vol:7.41  },
+  25: { cagr:7.74, sharpe:1.08, dd:11.56, vol:7.14  },
+  30: { cagr:7.68, sharpe:1.10, dd:8.52,  vol:6.99  },
+  35: { cagr:7.61, sharpe:1.09, dd:7.56,  vol:6.97  },
+  40: { cagr:7.53, sharpe:1.07, dd:7.73,  vol:7.07  },
+};
+
+// Crisis blended returns for each allocation (approx linear blend)
+// crisis_blend = (1-alpha)*bench_return + alpha*cta_return
+const crisisCTA  = { gfc:-3.91,  covid:25.91, rh:10.17 };  // CTA returns those years
+const crisisBench= { gfc:-3.91,  covid:16.04, rh:-16.65 }; // 60/40
+
+function crisisBlend(alpha, ctaReturn, benchReturn) {
+  return ((1 - alpha/100) * benchReturn + (alpha/100) * ctaReturn).toFixed(1);
+}
+
+// ── Chart.js ────────────────────────────────────────────────────
+const labels = [0,5,10,15,20,25,30,35,40];
+const sharpeVals = labels.map(x => allocData[x].sharpe);
+const ddVals     = labels.map(x => allocData[x].dd);
+
+const ctx = document.getElementById('allocChart').getContext('2d');
+const allocChart = new Chart(ctx, {
+  type: 'line',
+  data: {
+    labels: labels.map(x => x+'%'),
+    datasets: [
+      {
+        label: 'Sharpe Ratio',
+        data: sharpeVals,
+        borderColor: '#2166AC',
+        backgroundColor: 'rgba(33,102,172,0.08)',
+        yAxisID: 'y1',
+        borderWidth: 2.5,
+        pointRadius: 4,
+        pointBackgroundColor: '#2166AC',
+        tension: 0.3,
+        fill: true,
+      },
+      {
+        label: 'Max Drawdown (%)',
+        data: ddVals,
+        borderColor: '#D6604D',
+        backgroundColor: 'rgba(214,96,77,0.06)',
+        yAxisID: 'y2',
+        borderWidth: 2,
+        pointRadius: 4,
+        pointBackgroundColor: '#D6604D',
+        tension: 0.3,
+        fill: true,
+        borderDash: [5,3],
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    interaction: { mode: 'index', intersect: false },
+    plugins: {
+      legend: { position: 'bottom', labels: { font: { size: 11 }, boxWidth: 16 } },
+      tooltip: { backgroundColor: '#051C2C', titleColor: '#fff', bodyColor: '#8AABB8' }
+    },
+    scales: {
+      y1: {
+        type: 'linear', position: 'left',
+        title: { display: true, text: 'Sharpe Ratio', color: '#2166AC', font: { size: 11 } },
+        grid: { color: 'rgba(0,0,0,0.06)' },
+        ticks: { color: '#2166AC', font: { size: 10 } }
+      },
+      y2: {
+        type: 'linear', position: 'right',
+        title: { display: true, text: 'Max DD (%)', color: '#D6604D', font: { size: 11 } },
+        grid: { drawOnChartArea: false },
+        ticks: { color: '#D6604D', font: { size: 10 }, callback: v => v+'%' }
+      },
+      x: { grid: { color: 'rgba(0,0,0,0.05)' }, ticks: { font: { size: 10 } } }
+    }
+  }
+});
+
+// Vertical line annotation plugin (simple custom)
+let currentAlloc = 20;
+function addAnnotation() {
+  const meta = allocChart.getDatasetMeta(0);
+  if (!meta.data.length) return;
+  const idx = labels.indexOf(currentAlloc);
+  if (idx < 0) return;
+  const x = meta.data[idx].x;
+  const plugin = {
+    id: 'vline',
+    afterDraw(chart) {
+      const ctx2 = chart.ctx;
+      const i2 = labels.indexOf(currentAlloc);
+      if (i2 < 0) return;
+      const xPos = chart.getDatasetMeta(0).data[i2].x;
+      const topY = chart.chartArea.top;
+      const botY = chart.chartArea.bottom;
+      ctx2.save();
+      ctx2.beginPath();
+      ctx2.setLineDash([4,3]);
+      ctx2.moveTo(xPos, topY);
+      ctx2.lineTo(xPos, botY);
+      ctx2.lineWidth = 1.5;
+      ctx2.strokeStyle = '#1A7A4A';
+      ctx2.stroke();
+      ctx2.restore();
+    }
+  };
+  if (!allocChart.options.plugins.vline) {
+    Chart.register(plugin);
+    allocChart.update();
+  }
+}
+addAnnotation();
+
+// ── Slider interaction ──────────────────────────────────────────
+const slider = document.getElementById('allocSlider');
+slider.addEventListener('input', () => {
+  const a = parseInt(slider.value);
+  currentAlloc = a;
+  const d = allocData[a];
+  const base = allocData[0];
+
+  document.getElementById('allocPct').textContent = a + '%';
+  document.getElementById('blendedLabel').textContent = (100-a)+'/'+a+' Blended';
+  document.getElementById('mCAGR').textContent   = d.cagr.toFixed(2)+'%';
+  document.getElementById('mSharpe').textContent = d.sharpe.toFixed(2);
+  document.getElementById('mDD').textContent     = '-'+d.dd.toFixed(1)+'%';
+  document.getElementById('mVol').textContent    = d.vol.toFixed(2)+'%';
+
+  const dS = (d.sharpe - base.sharpe).toFixed(2);
+  const dD = (d.dd     - base.dd).toFixed(1);
+  const dC = (d.cagr   - base.cagr).toFixed(2);
+  const dV = (d.vol    - base.vol).toFixed(2);
+
+  document.getElementById('dSharpe').innerHTML = a===0 ? '' :
+    `<span class="d-pos">+${dS} vs pure 60/40</span>`;
+  document.getElementById('dDD').innerHTML = a===0 ? '' :
+    `<span class="${dD<0?'d-pos':'d-neg'}">${dD>0?'+':''}${dD}pp vs pure 60/40</span>`;
+  document.getElementById('dCAGR').innerHTML = a===0 ? '' :
+    `<span class="${dC>=0?'d-pos':'d-neg'}">${dC>=0?'+':''}${dC}pp vs pure 60/40</span>`;
+  document.getElementById('dVol').innerHTML = a===0 ? '' :
+    `<span class="${dV<0?'d-pos':'d-neg'}">${dV>=0?'+':''}${dV}pp vs pure 60/40</span>`;
+
+  // Update crisis table (blend CTA stress returns with bench)
+  const ctaGFC  = 21.55, ctaCOVID = 25.91, ctaRH = 10.17;
+  const bGFC=-3.91, bCOVID=16.04, bRH=-16.65;
+  const alpha = a / 100;
+  const gfc   = ((1-alpha)*bGFC   + alpha*ctaGFC).toFixed(1);
+  const covid = ((1-alpha)*bCOVID + alpha*ctaCOVID).toFixed(1);
+  const rh    = ((1-alpha)*bRH    + alpha*ctaRH).toFixed(1);
+  const dgfc  = (gfc   - bGFC).toFixed(1);
+  const dcov  = (covid - bCOVID).toFixed(1);
+  const drh   = (rh    - bRH).toFixed(1);
+
+  document.getElementById('c1').textContent = (gfc>0?'+':'')+gfc+'%';
+  document.getElementById('c1').className   = gfc>0?'text-green':'text-red';
+  document.getElementById('d1').textContent = (dgfc>=0?'+':'')+dgfc+' pp';
+  document.getElementById('d1').className   = dgfc>=0?'text-green':'text-red';
+
+  document.getElementById('c2').textContent = (covid>0?'+':'')+covid+'%';
+  document.getElementById('d2').textContent = (dcov>=0?'+':'')+dcov+' pp';
+  document.getElementById('d2').className   = dcov>=0?'text-green':'text-red';
+
+  document.getElementById('c3').textContent = (rh>0?'+':'')+rh+'%';
+  document.getElementById('c3').className   = rh>0?'text-green':'text-red';
+  document.getElementById('d3').textContent = (drh>=0?'+':'')+drh+' pp';
+  document.getElementById('d3').className   = drh>=0?'text-green':'text-red';
+
+  // Redraw chart with new annotation
+  allocChart.update('none');
+});
+
+// Trigger once at load
+slider.dispatchEvent(new Event('input'));
+
+// ── Q&A accordion ───────────────────────────────────────────────
+function toggleQA(el) {
+  const item = el.parentElement;
+  item.classList.toggle('open');
+}
+</script>
+</body>
+</html>

@@ -319,12 +319,6 @@
   .bold       { font-weight: 700; }
   .disclaimer { font-size: 0.75rem; color: var(--mgray); background: var(--lgray); border-radius: 6px; padding: 0.75rem 1rem; margin-top: 1.5rem; }
 
-  html.skip-gate #gate { display: none; }
-  html.skip-gate body.gate-active { overflow: auto; }
-  html.skip-gate body.gate-active #site-main {
-    opacity: 1; visibility: visible; pointer-events: auto; position: static; left: auto;
-  }
-
   /* ── LANDING GATE ── */
   body.gate-active { overflow: hidden; }
   body.gate-active #site-main {
@@ -388,13 +382,6 @@
     border-radius: 6px; padding: 0.2rem;
   }
 </style>
-<script>
-(function () {
-  if (sessionStorage.getItem('arc-entered')) {
-    document.documentElement.classList.add('skip-gate');
-  }
-})();
-</script>
 </head>
 <body class="gate-active">
 
@@ -1355,23 +1342,16 @@ function toggleQA(el) {
   item.classList.toggle('open');
 }
 
-// ── Landing gate ────────────────────────────────────────────────
+// ── Landing gate (shows on every page load) ─────────────────────
 (function () {
-  const GATE_KEY = 'arc-entered';
   const gate = document.getElementById('gate');
   const enterBtn = document.getElementById('gate-enter');
 
   function openSite() {
-    sessionStorage.setItem(GATE_KEY, '1');
-    document.body.classList.remove('gate-active');
-    gate.classList.add('gate-hidden');
-    window.scrollTo(0, 0);
-    enterBtn.blur();
-  }
-
-  if (sessionStorage.getItem(GATE_KEY)) {
     document.body.classList.remove('gate-active');
     if (gate) gate.classList.add('gate-hidden');
+    window.scrollTo(0, 0);
+    if (enterBtn) enterBtn.blur();
   }
 
   if (enterBtn) {

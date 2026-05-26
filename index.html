@@ -318,9 +318,103 @@
   .text-red   { color: var(--red); }
   .bold       { font-weight: 700; }
   .disclaimer { font-size: 0.75rem; color: var(--mgray); background: var(--lgray); border-radius: 6px; padding: 0.75rem 1rem; margin-top: 1.5rem; }
+
+  html.skip-gate #gate { display: none; }
+  html.skip-gate body.gate-active { overflow: auto; }
+  html.skip-gate body.gate-active #site-main {
+    opacity: 1; visibility: visible; pointer-events: auto; position: static; left: auto;
+  }
+
+  /* ── LANDING GATE ── */
+  body.gate-active { overflow: hidden; }
+  body.gate-active #site-main {
+    opacity: 0; visibility: hidden; pointer-events: none;
+    position: absolute; width: 100%; left: -9999px;
+  }
+  #gate {
+    position: fixed; inset: 0; z-index: 2000;
+    background: linear-gradient(160deg, var(--navy) 0%, #0a2840 50%, var(--navy-l) 100%);
+    display: flex; align-items: center; justify-content: center;
+    padding: 2rem;
+    transition: opacity 0.55s ease, visibility 0.55s ease;
+  }
+  #gate.gate-hidden {
+    opacity: 0; visibility: hidden; pointer-events: none;
+  }
+  #gate::before {
+    content: 'CTA';
+    position: absolute; right: -2rem; bottom: -3rem;
+    font-family: Georgia, serif; font-size: min(28rem, 42vw);
+    font-weight: 700; color: rgba(13,51,80,0.45);
+    line-height: 1; pointer-events: none; user-select: none;
+  }
+  .gate-inner {
+    position: relative; z-index: 1;
+    text-align: center; max-width: 520px;
+  }
+  .gate-badge {
+    display: inline-block; background: var(--blue); color: var(--white);
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em;
+    padding: 0.35rem 1rem; border-radius: 20px; margin-bottom: 1.75rem;
+    text-transform: uppercase;
+  }
+  .gate-title {
+    font-family: Georgia, serif; font-size: clamp(2.2rem, 6vw, 3.2rem);
+    font-weight: 700; color: var(--white); line-height: 1.15; margin-bottom: 1rem;
+  }
+  .gate-sub {
+    font-size: 1.05rem; color: #8AABB8; margin-bottom: 2.5rem; line-height: 1.65;
+  }
+  .gate-btn {
+    display: inline-block; border: none; cursor: pointer;
+    background: var(--white); color: var(--navy);
+    font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 700;
+    letter-spacing: 0.04em; padding: 1rem 2.5rem; border-radius: 8px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.35);
+    transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+  }
+  .gate-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.45);
+    background: #f0f4f8;
+  }
+  .gate-btn:active { transform: translateY(0); }
+  .gate-meta {
+    margin-top: 2.5rem; font-size: 0.78rem; color: #4A6880;
+  }
+  .gate-lang {
+    position: absolute; top: 1.25rem; right: 1.5rem;
+    display: flex; gap: 0.2rem; background: rgba(255,255,255,0.06);
+    border-radius: 6px; padding: 0.2rem;
+  }
 </style>
+<script>
+(function () {
+  if (sessionStorage.getItem('arc-entered')) {
+    document.documentElement.classList.add('skip-gate');
+  }
+})();
+</script>
 </head>
-<body>
+<body class="gate-active">
+
+<!-- LANDING -->
+<div id="gate" role="dialog" aria-labelledby="gate-title" aria-modal="true">
+  <div class="gate-lang lang-switch" role="group" aria-label="Language">
+    <button type="button" class="lang-btn active" data-lang="en" aria-pressed="true">EN</button>
+    <button type="button" class="lang-btn" data-lang="es" aria-pressed="false">ES</button>
+    <button type="button" class="lang-btn" data-lang="pt" aria-pressed="false">PT</button>
+  </div>
+  <div class="gate-inner">
+    <span class="gate-badge" data-i18n="gate.badge">ESADE Asset Management · Group Project</span>
+    <h1 class="gate-title" id="gate-title" data-i18n="gate.title">Alpha Ridge Capital</h1>
+    <p class="gate-sub" data-i18n="gate.sub">Quant fund pitch — strategy, back-test, team process, and class links. Simulated academic project only.</p>
+    <button type="button" class="gate-btn" id="gate-enter" data-i18n="gate.btn">Open our work</button>
+    <p class="gate-meta" data-i18n="gate.meta">Pitch deck · Quant appendix · Live presentation 10 June 2025</p>
+  </div>
+</div>
+
+<div id="site-main">
 
 <!-- NAV -->
 <nav>
@@ -1067,6 +1161,8 @@
   </div>
 </footer>
 
+</div><!-- /site-main -->
+
 <script src="arc-content.js"></script>
 <script src="i18n.js"></script>
 <script>
@@ -1258,6 +1354,33 @@ function toggleQA(el) {
   const item = el.parentElement;
   item.classList.toggle('open');
 }
+
+// ── Landing gate ────────────────────────────────────────────────
+(function () {
+  const GATE_KEY = 'arc-entered';
+  const gate = document.getElementById('gate');
+  const enterBtn = document.getElementById('gate-enter');
+
+  function openSite() {
+    sessionStorage.setItem(GATE_KEY, '1');
+    document.body.classList.remove('gate-active');
+    gate.classList.add('gate-hidden');
+    window.scrollTo(0, 0);
+    enterBtn.blur();
+  }
+
+  if (sessionStorage.getItem(GATE_KEY)) {
+    document.body.classList.remove('gate-active');
+    if (gate) gate.classList.add('gate-hidden');
+  }
+
+  if (enterBtn) {
+    enterBtn.addEventListener('click', openSite);
+    enterBtn.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') openSite();
+    });
+  }
+})();
 </script>
 </body>
 </html>

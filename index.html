@@ -25,7 +25,11 @@
     --border:  #D8DCE2;
   }
 
-  html { scroll-behavior: smooth; font-size: 16px; }
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 4.5rem;
+    font-size: 16px;
+  }
 
   body {
     font-family: 'Inter', sans-serif;
@@ -35,18 +39,51 @@
   }
 
   /* ── NAV ── */
-  nav {
+  #main-nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
     background: var(--navy);
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 0 2.5rem; height: 52px;
     box-shadow: 0 2px 12px rgba(0,0,0,0.3);
   }
-  .nav-brand { color: var(--white); font-family: Georgia, serif; font-size: 1.05rem; font-weight: 700; letter-spacing: 0.04em; }
-  .nav-right { display: flex; align-items: center; gap: 1.25rem; }
-  .nav-links { display: flex; gap: 1.5rem; list-style: none; flex-wrap: wrap; }
-  .nav-links a { color: #8AABB8; text-decoration: none; font-size: 0.82rem; font-weight: 500; letter-spacing: 0.03em; transition: color .2s; }
+  .nav-bar {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 2.5rem; height: 52px; gap: 1rem;
+  }
+  .nav-brand {
+    color: var(--white); font-family: Georgia, serif; font-size: 1.05rem;
+    font-weight: 700; letter-spacing: 0.04em; text-decoration: none; flex-shrink: 0;
+  }
+  .nav-brand:hover { color: var(--white); opacity: 0.92; }
+  .nav-panel { display: flex; align-items: center; gap: 1.25rem; }
+  .nav-links { display: flex; gap: 1.5rem; list-style: none; margin: 0; padding: 0; }
+  .nav-links a {
+    color: #8AABB8; text-decoration: none; font-size: 0.82rem; font-weight: 500;
+    letter-spacing: 0.03em; transition: color .2s, background .2s;
+  }
   .nav-links a:hover { color: var(--white); }
+  .nav-toggle {
+    display: none; align-items: center; justify-content: center;
+    width: 40px; height: 40px; padding: 0; border: none; border-radius: 6px;
+    background: rgba(255,255,255,0.08); cursor: pointer; flex-shrink: 0;
+  }
+  .nav-toggle:hover { background: rgba(255,255,255,0.14); }
+  .nav-toggle-icon, .nav-toggle-icon::before, .nav-toggle-icon::after {
+    display: block; width: 20px; height: 2px; background: var(--white);
+    border-radius: 1px; transition: transform .25s, opacity .25s;
+  }
+  .nav-toggle-icon { position: relative; }
+  .nav-toggle-icon::before, .nav-toggle-icon::after {
+    content: ''; position: absolute; left: 0;
+  }
+  .nav-toggle-icon::before { top: -6px; }
+  .nav-toggle-icon::after { top: 6px; }
+  #main-nav.nav-open .nav-toggle-icon { background: transparent; }
+  #main-nav.nav-open .nav-toggle-icon::before { top: 0; transform: rotate(45deg); }
+  #main-nav.nav-open .nav-toggle-icon::after { top: 0; transform: rotate(-45deg); }
+  .nav-overlay {
+    display: none; position: fixed; inset: 0; top: 52px;
+    background: rgba(5,28,44,0.45); z-index: -1;
+  }
+  #main-nav.nav-open .nav-overlay { display: block; }
   .lang-switch { display: flex; gap: 0.2rem; background: rgba(255,255,255,0.06); border-radius: 6px; padding: 0.2rem; }
   .lang-btn {
     border: none; background: transparent; color: #6A8CA0;
@@ -56,6 +93,7 @@
   }
   .lang-btn:hover { color: var(--white); }
   .lang-btn.active { background: var(--blue); color: var(--white); }
+  .nav-lang-mobile { display: none; }
 
   /* ── TEAM PROCESS ── */
   #process { background: var(--white); }
@@ -115,14 +153,40 @@
   @media (max-width: 900px) {
     .class-grid { grid-template-columns: 1fr; }
   }
+  @media (max-width: 960px) {
+    .nav-toggle { display: flex; }
+    .nav-lang-mobile { display: flex; }
+    .nav-lang-desktop { display: none; }
+    .nav-bar { padding: 0 1rem; }
+    .nav-panel {
+      display: none; position: absolute; top: 52px; left: 0; right: 0;
+      flex-direction: column; align-items: stretch; gap: 0;
+      background: var(--navy-l);
+      border-top: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.35);
+      max-height: calc(100vh - 52px); overflow-y: auto;
+    }
+    #main-nav.nav-open .nav-panel { display: flex; }
+    .nav-links {
+      flex-direction: column; gap: 0; width: 100%;
+      padding: 0.5rem 0;
+    }
+    .nav-links li { width: 100%; }
+    .nav-links a {
+      display: block; padding: 0.75rem 1.25rem; font-size: 0.9rem;
+    }
+    .nav-links a:hover { background: rgba(255,255,255,0.06); }
+    .nav-panel .lang-switch {
+      margin: 0.75rem 1.25rem 1rem; align-self: flex-start;
+    }
+  }
   @media (max-width: 768px) {
-    nav { padding: 0 1rem; height: auto; min-height: 52px; flex-wrap: wrap; gap: 0.5rem; padding-bottom: 0.5rem; }
-    .nav-right { flex-wrap: wrap; }
     .status-list { grid-template-columns: 1fr; }
   }
 
   /* ── SECTIONS ── */
-  section { padding: 5rem 0; }
+  section { padding: 5rem 0; scroll-margin-top: 4.5rem; }
+  #hero { scroll-margin-top: 0; }
   .container { max-width: 1100px; margin: 0 auto; padding: 0 2.5rem; }
 
   h2 { font-family: Georgia, serif; font-size: 2rem; font-weight: 700; color: var(--navy); margin-bottom: 0.5rem; }
@@ -404,9 +468,20 @@
 <div id="site-main">
 
 <!-- NAV -->
-<nav>
-  <span class="nav-brand" data-i18n="nav.brand">Alpha Ridge Capital</span>
-  <div class="nav-right">
+<nav id="main-nav">
+  <div class="nav-bar">
+    <a class="nav-brand" href="#hero" data-i18n="nav.brand">Alpha Ridge Capital</a>
+    <div class="lang-switch nav-lang-mobile" role="group" aria-label="Language">
+      <button type="button" class="lang-btn active" data-lang="en" aria-pressed="true">EN</button>
+      <button type="button" class="lang-btn" data-lang="es" aria-pressed="false">ES</button>
+      <button type="button" class="lang-btn" data-lang="pt" aria-pressed="false">PT</button>
+    </div>
+    <button type="button" class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="nav-panel" data-i18n-aria-open="nav.menuOpen" data-i18n-aria-close="nav.menuClose" aria-label="Open menu">
+      <span class="nav-toggle-icon" aria-hidden="true"></span>
+    </button>
+  </div>
+  <div class="nav-overlay" id="nav-overlay" aria-hidden="true"></div>
+  <div class="nav-panel" id="nav-panel">
     <ul class="nav-links">
       <li><a href="#assignment" data-i18n="nav.assignment">Assignment</a></li>
       <li><a href="#classes" data-i18n="nav.classes">Classes</a></li>
@@ -418,7 +493,7 @@
       <li><a href="#qa" data-i18n="nav.qa">Q&amp;A Prep</a></li>
       <li><a href="#refs" data-i18n="nav.refs">References</a></li>
     </ul>
-    <div class="lang-switch" role="group" aria-label="Language">
+    <div class="lang-switch nav-lang-desktop" role="group" aria-label="Language">
       <button type="button" class="lang-btn active" data-lang="en" aria-pressed="true">EN</button>
       <button type="button" class="lang-btn" data-lang="es" aria-pressed="false">ES</button>
       <button type="button" class="lang-btn" data-lang="pt" aria-pressed="false">PT</button>
@@ -1341,6 +1416,42 @@ function toggleQA(el) {
   const item = el.parentElement;
   item.classList.toggle('open');
 }
+
+// ── Mobile nav ──────────────────────────────────────────────────
+(function () {
+  const nav = document.getElementById('main-nav');
+  const toggle = document.getElementById('nav-toggle');
+  const overlay = document.getElementById('nav-overlay');
+
+  function setNavOpen(open) {
+    if (!nav || !toggle) return;
+    nav.classList.toggle('nav-open', open);
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (window.ARC_I18N && typeof window.ARC_I18N.updateNavAria === 'function') {
+      window.ARC_I18N.updateNavAria();
+    }
+    if (open) document.body.style.overflow = 'hidden';
+    else document.body.style.overflow = '';
+  }
+
+  if (toggle) {
+    toggle.addEventListener('click', function () {
+      setNavOpen(!nav.classList.contains('nav-open'));
+    });
+  }
+  if (overlay) {
+    overlay.addEventListener('click', function () { setNavOpen(false); });
+  }
+  nav && nav.querySelectorAll('.nav-links a').forEach(function (a) {
+    a.addEventListener('click', function () { setNavOpen(false); });
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && nav && nav.classList.contains('nav-open')) setNavOpen(false);
+  });
+  window.addEventListener('resize', function () {
+    if (window.innerWidth > 960 && nav && nav.classList.contains('nav-open')) setNavOpen(false);
+  });
+})();
 
 // ── Landing gate (shows on every page load) ─────────────────────
 (function () {

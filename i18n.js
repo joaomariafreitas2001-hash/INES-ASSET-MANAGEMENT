@@ -17,6 +17,8 @@
       'nav.methodology': 'Methodology',
       'nav.qa': 'Q&A Prep',
       'nav.refs': 'References',
+      'nav.menuOpen': 'Open menu',
+      'nav.menuClose': 'Close menu',
       'gate.badge': 'ESADE Asset Management · Group Project',
       'gate.title': 'Alpha Ridge Capital',
       'gate.sub': 'Quant fund pitch — strategy, back-test, team process, and class links. Simulated academic project only.',
@@ -156,6 +158,8 @@
       'nav.methodology': 'Metodología',
       'nav.qa': 'Prep. Q&A',
       'nav.refs': 'Referencias',
+      'nav.menuOpen': 'Abrir menú',
+      'nav.menuClose': 'Cerrar menú',
       'gate.badge': 'Gestión de Activos ESADE · Proyecto en grupo',
       'gate.title': 'Alpha Ridge Capital',
       'gate.sub': 'Pitch de fondo cuantitativo — estrategia, back-test, proceso del equipo y vínculo con las clases. Solo proyecto académico simulado.',
@@ -295,6 +299,8 @@
       'nav.methodology': 'Metodologia',
       'nav.qa': 'Prep. Q&A',
       'nav.refs': 'Referências',
+      'nav.menuOpen': 'Abrir menu',
+      'nav.menuClose': 'Fechar menu',
       'gate.badge': 'Gestão de Ativos ESADE · Projeto em grupo',
       'gate.title': 'Alpha Ridge Capital',
       'gate.sub': 'Pitch de fundo quantitativo — estratégia, back-test, processo da equipa e ligação às aulas. Apenas projeto académico simulado.',
@@ -448,6 +454,8 @@
       btn.setAttribute('aria-pressed', btn.getAttribute('data-lang') === lang ? 'true' : 'false');
     });
 
+    updateNavAria();
+
     const tl = document.getElementById('journey-timeline');
     if (tl && window.ARC_TIMELINE && window.ARC_TIMELINE[lang]) {
       tl.innerHTML = window.ARC_TIMELINE[lang];
@@ -466,7 +474,16 @@
 
   }
 
-  window.ARC_I18N = { setLang: setLang, getLang: getLang, T: T };
+  function updateNavAria() {
+    const toggle = document.getElementById('nav-toggle');
+    const nav = document.getElementById('main-nav');
+    if (!toggle || !nav) return;
+    const lang = getLang();
+    const open = nav.classList.contains('nav-open');
+    toggle.setAttribute('aria-label', T[lang][open ? 'nav.menuClose' : 'nav.menuOpen']);
+  }
+
+  window.ARC_I18N = { setLang: setLang, getLang: getLang, T: T, updateNavAria: updateNavAria };
 
   document.addEventListener('DOMContentLoaded', function () {
     const tl = document.getElementById('journey-timeline');
@@ -493,5 +510,6 @@
       });
     });
     setLang(getLang());
+    updateNavAria();
   });
 })();

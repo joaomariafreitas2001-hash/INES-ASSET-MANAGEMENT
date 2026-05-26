@@ -43,9 +43,53 @@
     box-shadow: 0 2px 12px rgba(0,0,0,0.3);
   }
   .nav-brand { color: var(--white); font-family: Georgia, serif; font-size: 1.05rem; font-weight: 700; letter-spacing: 0.04em; }
-  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-right { display: flex; align-items: center; gap: 1.25rem; }
+  .nav-links { display: flex; gap: 1.5rem; list-style: none; flex-wrap: wrap; }
   .nav-links a { color: #8AABB8; text-decoration: none; font-size: 0.82rem; font-weight: 500; letter-spacing: 0.03em; transition: color .2s; }
   .nav-links a:hover { color: var(--white); }
+  .lang-switch { display: flex; gap: 0.2rem; background: rgba(255,255,255,0.06); border-radius: 6px; padding: 0.2rem; }
+  .lang-btn {
+    border: none; background: transparent; color: #6A8CA0;
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em;
+    padding: 0.35rem 0.55rem; border-radius: 4px; cursor: pointer;
+    transition: background .15s, color .15s;
+  }
+  .lang-btn:hover { color: var(--white); }
+  .lang-btn.active { background: var(--blue); color: var(--white); }
+
+  /* ── TEAM PROCESS ── */
+  #process { background: var(--white); }
+  .status-card {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-l) 100%);
+    border-radius: 10px; padding: 2rem 2.2rem; color: var(--white); margin-bottom: 2.5rem;
+  }
+  .status-card h3 { color: var(--white); font-size: 1.2rem; margin-bottom: 0.25rem; }
+  .status-card .status-sub { font-size: 0.82rem; color: #6A8CA0; margin-bottom: 1.25rem; }
+  .status-list { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem 2rem; }
+  .status-list li {
+    display: flex; align-items: flex-start; gap: 0.65rem;
+    font-size: 0.88rem; color: #B8D0E0; padding: 0.35rem 0;
+  }
+  .status-list li.done::before {
+    content: '✓'; flex-shrink: 0; width: 1.25rem; height: 1.25rem;
+    background: var(--green); color: var(--white); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.65rem; font-weight: 700;
+  }
+  .status-list li.todo::before {
+    content: ''; flex-shrink: 0; width: 1.25rem; height: 1.25rem;
+    border: 2px solid #4A7090; border-radius: 50%;
+  }
+  .process-next {
+    margin-top: 1.25rem; padding-top: 1.25rem; border-top: 1px solid rgba(255,255,255,0.1);
+    font-size: 0.88rem; color: #8AABB8;
+  }
+  .process-next strong { color: var(--white); }
+  @media (max-width: 768px) {
+    nav { padding: 0 1rem; height: auto; min-height: 52px; flex-wrap: wrap; gap: 0.5rem; padding-bottom: 0.5rem; }
+    .nav-right { flex-wrap: wrap; }
+    .status-list { grid-template-columns: 1fr; }
+  }
 
   /* ── SECTIONS ── */
   section { padding: 5rem 0; }
@@ -250,45 +294,52 @@
 
 <!-- NAV -->
 <nav>
-  <span class="nav-brand">Alpha Ridge Capital</span>
-  <ul class="nav-links">
-    <li><a href="#assignment">Assignment</a></li>
-    <li><a href="#journey">Our Journey</a></li>
-    <li><a href="#strategy">Strategy</a></li>
-    <li><a href="#results">Results</a></li>
-    <li><a href="#allocator">Allocator Case</a></li>
-    <li><a href="#methodology">Methodology</a></li>
-    <li><a href="#qa">Q&amp;A Prep</a></li>
-    <li><a href="#refs">References</a></li>
-  </ul>
+  <span class="nav-brand" data-i18n="nav.brand">Alpha Ridge Capital</span>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="#assignment" data-i18n="nav.assignment">Assignment</a></li>
+      <li><a href="#process" data-i18n="nav.journey">Our Process</a></li>
+      <li><a href="#strategy" data-i18n="nav.strategy">Strategy</a></li>
+      <li><a href="#results" data-i18n="nav.results">Results</a></li>
+      <li><a href="#allocator" data-i18n="nav.allocator">Allocator Case</a></li>
+      <li><a href="#methodology" data-i18n="nav.methodology">Methodology</a></li>
+      <li><a href="#qa" data-i18n="nav.qa">Q&amp;A Prep</a></li>
+      <li><a href="#refs" data-i18n="nav.refs">References</a></li>
+    </ul>
+    <div class="lang-switch" role="group" aria-label="Language">
+      <button type="button" class="lang-btn active" data-lang="en" aria-pressed="true">EN</button>
+      <button type="button" class="lang-btn" data-lang="es" aria-pressed="false">ES</button>
+      <button type="button" class="lang-btn" data-lang="pt" aria-pressed="false">PT</button>
+    </div>
+  </div>
 </nav>
 
 <!-- HERO -->
 <section id="hero">
   <div class="container hero-inner">
-    <span class="hero-badge">ESADE Asset Management &nbsp;|&nbsp; Group Project</span>
-    <h1 class="hero-title">Alpha Ridge Capital</h1>
-    <p class="hero-sub">Multi-Asset Trend-Following CTA Strategy &mdash; simulated quant fund pitch raising USD&nbsp;100M</p>
+    <span class="hero-badge" data-i18n="hero.badge">ESADE Asset Management | Group Project</span>
+    <h1 class="hero-title" data-i18n="hero.title">Alpha Ridge Capital</h1>
+    <p class="hero-sub" data-i18n="hero.sub">Multi-Asset Trend-Following CTA Strategy — simulated quant fund pitch raising USD 100M</p>
     <div class="kpi-grid">
       <div class="kpi-card">
         <div class="kpi-val pos">+5.86%</div>
-        <div class="kpi-lbl">Net CAGR &mdash; Full Period</div>
+        <div class="kpi-lbl" data-i18n="hero.kpi1">Net CAGR — Full Period</div>
       </div>
       <div class="kpi-card">
         <div class="kpi-val">0.41</div>
-        <div class="kpi-lbl">Sharpe Ratio &mdash; Net</div>
+        <div class="kpi-lbl" data-i18n="hero.kpi2">Sharpe Ratio — Net</div>
       </div>
       <div class="kpi-card">
         <div class="kpi-val pos">+21.6%</div>
-        <div class="kpi-lbl">GFC 2008&ndash;09 Return</div>
+        <div class="kpi-lbl" data-i18n="hero.kpi3">GFC 2008–09 Return</div>
       </div>
       <div class="kpi-card">
         <div class="kpi-val neg">-30.6%</div>
-        <div class="kpi-lbl">Maximum Drawdown</div>
+        <div class="kpi-lbl" data-i18n="hero.kpi4">Maximum Drawdown</div>
       </div>
     </div>
-    <p class="hero-meta">Back-test period: 2006&ndash;2024 &nbsp;&bull;&nbsp; In-sample: 2006&ndash;2019 &nbsp;&bull;&nbsp; OOS: 2020&ndash;2024 &nbsp;&bull;&nbsp; Universe: 10 liquid ETFs &nbsp;&bull;&nbsp; Live pitch: 10 June 2025</p>
-    <p class="disclaimer" style="margin-top:1.5rem; background:rgba(255,255,255,0.05); color:#4A6880;">
+    <p class="hero-meta" data-i18n="hero.meta">Back-test period: 2006–2024 · In-sample: 2006–2019 · OOS: 2020–2024 · Universe: 10 liquid ETFs · Live pitch: 10 June 2025</p>
+    <p class="disclaimer" style="margin-top:1.5rem; background:rgba(255,255,255,0.05); color:#4A6880;" data-i18n="hero.disclaimer" data-i18n-html="true">
       All returns are <strong style="color:#6A8CA0">simulated back-tests</strong>. No live track record exists. Past simulated performance is not indicative of future results. Presented for academic purposes only.
     </p>
   </div>
@@ -297,29 +348,54 @@
 <!-- ASSIGNMENT -->
 <section id="assignment">
   <div class="container">
-    <p class="section-label">Context</p>
-    <h2>The Assignment</h2>
+    <p class="section-label" data-i18n="assign.label">Context</p>
+    <h2 data-i18n="assign.title">The Assignment</h2>
     <div class="divider"></div>
-    <p class="section-sub">ESADE Asset Management course &mdash; group project requiring a full quant fund pitch as if raising USD&nbsp;100M from institutional investors.</p>
+    <p class="section-sub" data-i18n="assign.sub">ESADE Asset Management course — group project requiring a full quant fund pitch as if raising USD 100M from institutional investors.</p>
     <div class="assign-grid">
       <div class="info-box">
-        <h3>Deliverables</h3>
+        <h3 data-i18n="assign.deliverables">Deliverables</h3>
         <ul>
-          <li><span class="bullet"></span><div><span class="tag">1</span> Pitch deck — PDF, max 15 slides</div></li>
-          <li><span class="bullet"></span><div><span class="tag">2</span> Quant appendix — Jupyter notebook with full back-test</div></li>
-          <li><span class="bullet"></span><div><span class="tag deadline">Live 10 Jun</span> Presentation to a panel as if raising capital</div></li>
+          <li><span class="bullet"></span><div><span class="tag">1</span> <span data-i18n="assign.del1">Pitch deck — PDF, max 15 slides</span></div></li>
+          <li><span class="bullet"></span><div><span class="tag">2</span> <span data-i18n="assign.del2">Quant appendix — Jupyter notebook with full back-test</span></div></li>
+          <li><span class="bullet"></span><div><span class="tag deadline" data-i18n="assign.del3tag">Live 10 Jun</span> <span data-i18n="assign.del3">Presentation to a panel as if raising capital</span></div></li>
         </ul>
       </div>
       <div class="info-box">
-        <h3>Requirements</h3>
+        <h3 data-i18n="assign.requirements">Requirements</h3>
         <ul>
-          <li><span class="bullet"></span>Design a systematic (rules-based) investment strategy</li>
-          <li><span class="bullet"></span>Back-test it rigorously with proper IS/OOS split</li>
-          <li><span class="bullet"></span>Show it to a panel of finance professionals</li>
-          <li><span class="bullet"></span>Defend every assumption and parameter choice</li>
-          <li><span class="bullet"></span>Address biases, capacity, and risk explicitly</li>
+          <li><span class="bullet"></span><span data-i18n="assign.req1">Design a systematic (rules-based) investment strategy</span></li>
+          <li><span class="bullet"></span><span data-i18n="assign.req2">Back-test it rigorously with proper IS/OOS split</span></li>
+          <li><span class="bullet"></span><span data-i18n="assign.req3">Present it to a panel of finance professionals</span></li>
+          <li><span class="bullet"></span><span data-i18n="assign.req4">Defend every assumption and parameter choice</span></li>
+          <li><span class="bullet"></span><span data-i18n="assign.req5">Address biases, capacity, and risk explicitly</span></li>
         </ul>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM PROCESS -->
+<section id="process">
+  <div class="container">
+    <p class="section-label" data-i18n="process.label">For the team</p>
+    <h2 data-i18n="process.title">How we got here</h2>
+    <div class="divider"></div>
+    <p class="section-sub" data-i18n="process.sub">Full record of our work — from the assignment brief to the CTA strategy we are pitching. Use this section to align before the live presentation.</p>
+
+    <div class="status-card">
+      <h3 data-i18n="process.status.title">Where we are now</h3>
+      <p class="status-sub" data-i18n="process.status.sub">Last updated: May 2025</p>
+      <ul class="status-list">
+        <li class="done" data-i18n="process.s1">Assignment &amp; course materials reviewed</li>
+        <li class="done" data-i18n="process.s2">First strategy (equity L/S) built and back-tested</li>
+        <li class="done" data-i18n="process.s3">Negative results analysed — pivot decision documented</li>
+        <li class="done" data-i18n="process.s4">CTA strategy implemented in quant appendix</li>
+        <li class="done" data-i18n="process.s5">Pitch deck (PowerPoint) generated</li>
+        <li class="done" data-i18n="process.s6">Team website + charts published</li>
+        <li class="todo" data-i18n="process.s7">Live pitch &amp; panel Q&amp;A — 10 June</li>
+      </ul>
+      <p class="process-next" data-i18n="process.next" data-i18n-html="true"><strong>Next:</strong> rehearse pitch narrative, assign speaking roles, run through Q&amp;A below.</p>
     </div>
   </div>
 </section>
@@ -327,15 +403,29 @@
 <!-- JOURNEY -->
 <section id="journey">
   <div class="container">
-    <p class="section-label">Decision Log</p>
-    <h2>Our Journey</h2>
+    <p class="section-label" data-i18n="journey.label">Decision log</p>
+    <h2 data-i18n="journey.title">Strategy evolution</h2>
     <div class="divider"></div>
-    <p class="section-sub">We did not start with a CTA strategy. Here is the full record of what we tried, why it failed, and why we switched.</p>
-    <div class="timeline">
+    <p class="section-sub" data-i18n="journey.sub">We did not start with a CTA. Below is what we tried, what failed, and why we switched.</p>
+    <div class="timeline" id="journey-timeline">
+
+      <div class="tl-item">
+        <div class="tl-dot navy">0</div>
+        <div class="tl-label">Phase 0 — Kickoff</div>
+        <div class="tl-title">Read the brief, course lectures, and split the work</div>
+        <p class="tl-body">
+          We started by reading the assignment instructions and all five lecture decks plus the guest lecture. We agreed on deliverables (deck + Jupyter appendix + live pitch), timeline (pitch 10 June), and roles: strategy design, Python back-test, deck narrative, and presentation prep.
+        </p>
+        <div>
+          <span class="result-pill pill-blue">Assignment PDF</span>
+          <span class="result-pill pill-gray">Lectures 1–5</span>
+          <span class="result-pill pill-gray">Team roles</span>
+        </div>
+      </div>
 
       <div class="tl-item">
         <div class="tl-dot blue">1</div>
-        <div class="tl-label">Phase 1 &mdash; Strategy Design</div>
+        <div class="tl-label">Phase 1 — Strategy Design</div>
         <div class="tl-title">Chose cross-sectional equity long/short on S&P 500</div>
         <p class="tl-body">
           We combined three well-documented signals on S&P 500 constituents: 12&minus;1 month price momentum (Jegadeesh &amp; Titman 1993), low realized volatility (Ang et al. 2006), and short-term reversal (Lehmann 1990). Portfolio construction used Hierarchical Risk Parity (L&oacute;pez de Prado 2016). Dollar-neutral, monthly rebalancing, 10 bps/side costs.
@@ -405,6 +495,34 @@
         </div>
       </div>
 
+      <div class="tl-item">
+        <div class="tl-dot green">6</div>
+        <div class="tl-label">Phase 6 — CTA Implementation</div>
+        <div class="tl-title">Rebuilt quant appendix; fixed data &amp; pandas issues</div>
+        <p class="tl-body">
+          We rewrote <code>quant_appendix.ipynb</code> from scratch: 10-ETF universe, dual moving-average signal (10m + 12m), vol-targeted sizing, IS/OOS split at 2020. Along the way we fixed Wikipedia 403 errors, pandas 2.x <code>read_html</code> and index intersection bugs, and yfinance DataFrame/Series issues. Exported charts to this website folder.
+        </p>
+        <div>
+          <span class="result-pill pill-green">Notebook rebuilt</span>
+          <span class="result-pill pill-gray">IS/OOS validated</span>
+          <span class="result-pill pill-gray">Charts exported</span>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot green">7</div>
+        <div class="tl-label">Phase 7 — Deliverables</div>
+        <div class="tl-title">Deck, website, and pitch prep — where we are today</div>
+        <p class="tl-body">
+          We generated <code>AlphaRidgeCapital_PitchDeck.pptx</code> via <code>build_deck.py</code>, built this team website with live allocator slider and Q&amp;A prep, and aligned the narrative around the <strong>allocator case</strong> (20% CTA overlay improves Sharpe and cuts drawdown). Remaining work: rehearse the live pitch and panel Q&amp;A on 10 June.
+        </p>
+        <div>
+          <span class="result-pill pill-blue">Pitch deck</span>
+          <span class="result-pill pill-blue">This website</span>
+          <span class="result-pill pill-gray">Live pitch 10 Jun</span>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
@@ -412,13 +530,13 @@
 <!-- STRATEGY -->
 <section id="strategy">
   <div class="container">
-    <p class="section-label">How It Works</p>
-    <h2>The Strategy</h2>
+    <p class="section-label" data-i18n="strategy.label">How it works</p>
+    <h2 data-i18n="strategy.title">The Strategy</h2>
     <div class="divider"></div>
 
     <div style="display:grid; grid-template-columns:1fr 1fr; gap:2.5rem; margin-bottom:2.5rem;">
       <div>
-        <h3 style="margin-bottom:1rem;">Universe &mdash; 10 Liquid ETFs</h3>
+        <h3 style="margin-bottom:1rem;" data-i18n="strategy.universe">Universe — 10 Liquid ETFs</h3>
         <table class="etf-table">
           <thead><tr><th>Ticker</th><th>Name</th><th>Class</th></tr></thead>
           <tbody>
@@ -436,7 +554,7 @@
         </table>
       </div>
       <div>
-        <h3 style="margin-bottom:1rem;">Signal &amp; Sizing</h3>
+        <h3 style="margin-bottom:1rem;" data-i18n="strategy.signal">Signal &amp; Sizing</h3>
         <div class="formula-box">
           <div class="formula-label">Signal (month-end t, asset i)</div>
           <code>signal(i,t) = sign( avg(MA10, MA12)(i,t) &minus; Price(i,t) )</code>
@@ -452,20 +570,20 @@
 
     <div class="strategy-grid">
       <div class="s-card">
-        <h3>Why dual MA instead of single?</h3>
-        <p>A single 10-month MA generates very similar signals to a 12-month MA but with different exact threshold dates. Using the average of both reduces "threshold sensitivity" &mdash; the chance that a minor parameter choice drives all the performance. This is a robustness argument, not an optimisation.</p>
+        <h3 data-i18n="strategy.dual">Why dual MA instead of single?</h3>
+        <p data-i18n="strategy.dual.p">A single 10-month MA generates very similar signals to a 12-month MA but with different exact threshold dates. Using the average of both reduces "threshold sensitivity" — the chance that a minor parameter choice drives all the performance. This is a robustness argument, not an optimisation.</p>
       </div>
       <div class="s-card accent-green">
-        <h3>Why vol-target instead of equal weight?</h3>
-        <p>Equal-weight allocates equal capital but unequal risk. TLT has ~14% annual vol vs SPY's ~18% &mdash; not dramatically different. But crude oil (USO) has ~40% vol. Without vol-targeting, one commodity position would dominate risk. Vol-targeting ensures every asset contributes equally to portfolio risk.</p>
+        <h3 data-i18n="strategy.vol">Why vol-target instead of equal weight?</h3>
+        <p data-i18n="strategy.vol.p">Equal-weight allocates equal capital but unequal risk. TLT has ~14% annual vol vs SPY's ~18% — not dramatically different. But crude oil (USO) has ~40% vol. Without vol-targeting, one commodity position would dominate risk. Vol-targeting ensures every asset contributes equally to portfolio risk.</p>
       </div>
       <div class="s-card accent-navy">
-        <h3>Why 5 bps transaction cost?</h3>
-        <p>ETF bid-ask spreads for SPY, QQQ, TLT are 1&ndash;2 bps. We use 5 bps per side to be conservative, covering market impact and any execution slippage. At our turnover (~37%/month), this costs approximately 22 bps/month or ~2.6% annually in friction costs.</p>
+        <h3 data-i18n="strategy.cost">Why 5 bps transaction cost?</h3>
+        <p data-i18n="strategy.cost.p">ETF bid-ask spreads for SPY, QQQ, TLT are 1–2 bps. We use 5 bps per side to be conservative, covering market impact and any execution slippage. At our turnover (~37%/month), this costs approximately 22 bps/month or ~2.6% annually in friction costs.</p>
       </div>
       <div class="s-card">
-        <h3>What is the execution protocol?</h3>
-        <p>Signal computed at month-end close of day <em>t</em>. Weights entered at open of day <em>t+1</em> (one business day lag). This strictly prevents look-ahead bias &mdash; we never use any price information that was not available at decision time.</p>
+        <h3 data-i18n="strategy.exec">What is the execution protocol?</h3>
+        <p data-i18n="strategy.exec.p">Signal computed at month-end close of day t. Weights entered at open of day t+1 (one business day lag). This strictly prevents look-ahead bias — we never use any price information that was not available at decision time.</p>
       </div>
     </div>
   </div>
@@ -474,10 +592,10 @@
 <!-- RESULTS -->
 <section id="results">
   <div class="container">
-    <p class="section-label">Back-Test</p>
-    <h2>Performance Results</h2>
+    <p class="section-label" data-i18n="results.label">Back-test</p>
+    <h2 data-i18n="results.title">Performance Results</h2>
     <div class="divider"></div>
-    <p class="section-sub">2006&ndash;2024 full period, IS/OOS split at 2020-01-01. All returns net of 5 bps/side transaction costs.</p>
+    <p class="section-sub" data-i18n="results.sub">2006–2024 full period, IS/OOS split at 2020-01-01. All returns net of 5 bps/side transaction costs.</p>
 
     <table class="results-table">
       <thead>
@@ -493,16 +611,16 @@
       </tbody>
     </table>
 
-    <div style="background:var(--lgray); border-radius:8px; padding:1rem 1.3rem; font-size:0.9rem; color:var(--navy); margin-bottom:2rem;">
-      <strong>Key insight:</strong> OOS Sharpe (0.45) is <em>higher</em> than IS (0.39) &mdash; no evidence of overfitting. Full-period correlation with 60/40: <strong>&minus;0.02</strong>, confirming genuine diversification rather than equity beta in disguise.
+    <div style="background:var(--lgray); border-radius:8px; padding:1rem 1.3rem; font-size:0.9rem; color:var(--navy); margin-bottom:2rem;" data-i18n="results.insight" data-i18n-html="true">
+      <strong>Key insight:</strong> OOS Sharpe (0.45) is <em>higher</em> than IS (0.39) — no evidence of overfitting. Full-period correlation with 60/40: <strong>−0.02</strong>, confirming genuine diversification rather than equity beta in disguise.
     </div>
 
     <div class="chart-full">
       <img src="equity_curve.png" alt="Equity curve, drawdown, and rolling Sharpe">
-      <div class="chart-caption">Equity curve (top), drawdown underwater chart (middle), and rolling 12-month Sharpe (bottom). Shaded region = OOS period 2020&ndash;2024.</div>
+      <div class="chart-caption" data-i18n="chart.equity">Equity curve (top), drawdown underwater chart (middle), and rolling 12-month Sharpe (bottom). Shaded region = OOS period 2020–2024.</div>
     </div>
 
-    <h3 style="margin:2rem 0 1rem;">Stress Scenarios</h3>
+    <h3 style="margin:2rem 0 1rem;" data-i18n="results.stress">Stress Scenarios</h3>
     <div class="stress-grid">
       <div class="stress-card">
         <div class="stress-header sh-red">GFC 2008&ndash;2009</div>
@@ -536,61 +654,61 @@
     <div class="chart-row" style="margin-top:1.5rem;">
       <div class="chart-box">
         <img src="monthly_heatmap.png" alt="Monthly returns heatmap">
-        <div class="chart-caption">Monthly returns heatmap (net). Green = positive month, red = negative.</div>
+        <div class="chart-caption" data-i18n="chart.heatmap">Monthly returns heatmap (net). Green = positive month, red = negative.</div>
       </div>
       <div class="chart-box">
         <img src="correlation.png" alt="Correlation matrix">
-        <div class="chart-caption">Return correlation matrix. CTA has near-zero correlation with SPY and 60/40 &mdash; key diversification property.</div>
+        <div class="chart-caption" data-i18n="chart.corr">Return correlation matrix. CTA has near-zero correlation with SPY and 60/40 — key diversification property.</div>
       </div>
     </div>
-    <p class="disclaimer">All returns are simulated. No live track record. Past simulated performance is not indicative of future results.</p>
+    <p class="disclaimer" data-i18n="results.disclaimer">All returns are simulated. No live track record. Past simulated performance is not indicative of future results.</p>
   </div>
 </section>
 
 <!-- ALLOCATOR CASE -->
 <section id="allocator">
   <div class="container">
-    <p class="section-label">The Allocator Case</p>
-    <h2>What Does Adding CTA Do to Your Portfolio?</h2>
+    <p class="section-label" data-i18n="alloc.label">The allocator case</p>
+    <h2 data-i18n="alloc.title">What does adding CTA do to your portfolio?</h2>
     <div class="divider"></div>
-    <p class="section-sub">A CTA is not sold as a standalone replacement for equities. It is sold as an overlay that improves an existing portfolio's risk-adjusted return. Use the slider to see the impact of any CTA allocation.</p>
+    <p class="section-sub" data-i18n="alloc.sub">A CTA is not sold as a standalone replacement for equities. It is an overlay that improves risk-adjusted return. Use the slider to see the impact.</p>
 
     <div class="alloc-layout">
       <div>
         <div class="slider-wrap">
-          <label>CTA Allocation &nbsp; <span id="allocPct">20%</span></label>
+          <label><span data-i18n="alloc.slider">CTA Allocation</span> &nbsp; <span id="allocPct">20%</span></label>
           <input type="range" id="allocSlider" min="0" max="40" step="5" value="20">
         </div>
         <div class="alloc-metrics">
           <div class="metric-box">
             <div class="metric-val" id="mCAGR" style="color:var(--navy)">7.79%</div>
-            <div class="metric-lbl">Blended CAGR</div>
+            <div class="metric-lbl" data-i18n="alloc.cagr">Blended CAGR</div>
             <div class="metric-delta" id="dCAGR"></div>
           </div>
           <div class="metric-box">
             <div class="metric-val text-blue" id="mSharpe">1.05</div>
-            <div class="metric-lbl">Sharpe Ratio</div>
+            <div class="metric-lbl" data-i18n="alloc.sharpe">Sharpe Ratio</div>
             <div class="metric-delta" id="dSharpe"></div>
           </div>
           <div class="metric-box">
             <div class="metric-val" id="mDD" style="color:var(--red)">-15.4%</div>
-            <div class="metric-lbl">Max Drawdown</div>
+            <div class="metric-lbl" data-i18n="alloc.dd">Max Drawdown</div>
             <div class="metric-delta" id="dDD"></div>
           </div>
           <div class="metric-box">
             <div class="metric-val" id="mVol" style="color:var(--mgray)">7.41%</div>
-            <div class="metric-lbl">Ann. Volatility</div>
+            <div class="metric-lbl" data-i18n="alloc.vol">Ann. Volatility</div>
             <div class="metric-delta" id="dVol"></div>
           </div>
         </div>
 
-        <h3 style="margin:1.5rem 0 0.75rem;">Crisis performance comparison</h3>
+        <h3 style="margin:1.5rem 0 0.75rem;" data-i18n="alloc.crisis">Crisis performance comparison</h3>
         <table class="crisis-table">
-          <thead><tr><th>Crisis</th><th>Pure 60/40</th><th id="blendedLabel">80/20 Blended</th><th>Delta</th></tr></thead>
+          <thead><tr><th data-i18n="alloc.crisis.th1">Crisis</th><th data-i18n="alloc.crisis.th2">Pure 60/40</th><th id="blendedLabel">80/20 Blended</th><th data-i18n="alloc.crisis.th4">Delta</th></tr></thead>
           <tbody>
-            <tr><td>GFC 2008&ndash;09</td><td class="text-red">&minus;3.9%</td><td id="c1" class="text-green">+1.6%</td><td id="d1" class="text-green">+5.5 pp</td></tr>
-            <tr><td>COVID 2020</td><td>+16.0%</td><td id="c2">+18.5%</td><td id="d2" class="text-green">+2.5 pp</td></tr>
-            <tr><td>2022 Rate-Hike</td><td class="text-red">&minus;16.7%</td><td id="c3" class="text-green">&minus;10.9%</td><td id="d3" class="text-green">+5.8 pp</td></tr>
+            <tr><td data-i18n="alloc.crisis.r1">GFC 2008–09</td><td class="text-red">−3.9%</td><td id="c1" class="text-green">+1.6%</td><td id="d1" class="text-green">+5.5 pp</td></tr>
+            <tr><td data-i18n="alloc.crisis.r2">COVID 2020</td><td>+16.0%</td><td id="c2">+18.5%</td><td id="d2" class="text-green">+2.5 pp</td></tr>
+            <tr><td data-i18n="alloc.crisis.r3">2022 Rate-Hike</td><td class="text-red">−16.7%</td><td id="c3" class="text-green">−10.9%</td><td id="d3" class="text-green">+5.8 pp</td></tr>
           </tbody>
         </table>
       </div>
@@ -598,22 +716,22 @@
         <div class="chart-canvas-wrap">
           <canvas id="allocChart" height="320"></canvas>
         </div>
-        <p style="font-size:0.78rem; color:var(--mgray); margin-top:0.75rem; text-align:center;">Sharpe ratio (blue) and max drawdown magnitude (red) vs CTA allocation. Dotted line = currently selected.</p>
+        <p style="font-size:0.78rem; color:var(--mgray); margin-top:0.75rem; text-align:center;" data-i18n="alloc.chart.note">Sharpe ratio (blue) and max drawdown magnitude (red) vs CTA allocation. Dotted line = currently selected.</p>
       </div>
     </div>
-    <p class="disclaimer">Blended portfolio = (1&minus;&alpha;) &times; 60/40 + &alpha; &times; CTA, monthly rebalanced. CTA returns net of 5 bps/side. All results are simulated.</p>
+    <p class="disclaimer" data-i18n="alloc.disclaimer">Blended portfolio = (1−α) × 60/40 + α × CTA, monthly rebalanced. CTA returns net of 5 bps/side. All results are simulated.</p>
   </div>
 </section>
 
 <!-- METHODOLOGY -->
 <section id="methodology">
   <div class="container">
-    <p class="section-label">Rigour</p>
-    <h2>Methodology &amp; Limitations</h2>
+    <p class="section-label" data-i18n="method.label">Rigour</p>
+    <h2 data-i18n="method.title">Methodology &amp; Limitations</h2>
     <div class="divider"></div>
     <div class="method-grid">
       <div class="method-card">
-        <h3>Data</h3>
+        <h3 data-i18n="method.data">Data</h3>
         <ul>
           <li>Yahoo Finance via <code>yfinance</code> (free, adjusted close)</li>
           <li>10 ETFs, 2005&ndash;2024, daily prices</li>
@@ -623,7 +741,7 @@
         </ul>
       </div>
       <div class="method-card">
-        <h3>Back-Test Rules</h3>
+        <h3 data-i18n="method.backtest">Back-Test Rules</h3>
         <ul>
           <li>Signal at month-end close of day <em>t</em></li>
           <li>Execution at open of day <em>t+1</em> (1-day lag)</li>
@@ -634,7 +752,7 @@
         </ul>
       </div>
       <div class="method-card">
-        <h3>Capacity</h3>
+        <h3 data-i18n="method.capacity">Capacity</h3>
         <ul>
           <li>10 ETFs with avg daily volume &gt; $1B each</li>
           <li>At 1% of ADV: capacity &gt; $10M/day per asset</li>
@@ -645,7 +763,7 @@
       </div>
     </div>
 
-    <h3 style="margin:2rem 0 1rem;">Known Biases &amp; Mitigations</h3>
+    <h3 style="margin:2rem 0 1rem;" data-i18n="method.bias">Known Biases &amp; Mitigations</h3>
     <table class="bias-table">
       <thead><tr><th>Bias</th><th>Direction</th><th>Mitigation</th></tr></thead>
       <tbody>
@@ -662,11 +780,12 @@
 <!-- Q&A PREP -->
 <section id="qa">
   <div class="container">
-    <p class="section-label">Pitch Preparation</p>
-    <h2>Anticipated Panel Questions</h2>
+    <p class="section-label" data-i18n="qa.label">Pitch preparation</p>
+    <h2 data-i18n="qa.title">Anticipated panel questions</h2>
     <div class="divider"></div>
-    <p class="section-sub">The hardest questions a panel will ask, with prepared answers.</p>
+    <p class="section-sub" data-i18n="qa.sub">The hardest questions a panel will ask, with prepared answers.</p>
 
+    <div id="qa-list">
     <div class="qa-item open">
       <div class="qa-q" onclick="toggleQA(this)">
         "Your Sharpe is 0.41. The 60/40 benchmark has a Sharpe of 0.84. Why should I give you money?"
@@ -726,14 +845,15 @@
         Correct &mdash; a real-world CTA would trade 50&ndash;100+ instruments across futures markets for equity indices, interest rates, FX, and commodities. We restricted to 10 liquid ETFs because: (1) we have free daily data via Yahoo Finance, (2) ETFs are accessible to institutional investors without futures infrastructure, and (3) the academic evidence for trend-following generalises well to our universe. Adding more instruments would likely improve diversification and Sharpe. This is the conservative version of the strategy.
       </div>
     </div>
+    </div>
   </div>
 </section>
 
 <!-- REFERENCES -->
 <section id="refs">
   <div class="container">
-    <p class="section-label" style="color:#4A7090;">Academic Foundation</p>
-    <h2>References</h2>
+    <p class="section-label" style="color:#4A7090;" data-i18n="refs.label">Academic foundation</p>
+    <h2 data-i18n="refs.title">References</h2>
     <div class="divider"></div>
     <div class="ref-grid">
       <div class="ref-card">
@@ -761,11 +881,13 @@
 <!-- FOOTER -->
 <footer>
   <div class="container">
-    <p>Alpha Ridge Capital &mdash; ESADE Asset Management Course &mdash; June 2025</p>
-    <p style="margin-top:0.4rem;">All returns are simulated back-tests. No live track record. Not investment advice. Academic purposes only.</p>
+    <p data-i18n="footer.l1">Alpha Ridge Capital — ESADE Asset Management Course — June 2025</p>
+    <p style="margin-top:0.4rem;" data-i18n="footer.l2">All returns are simulated back-tests. No live track record. Not investment advice. Academic purposes only.</p>
   </div>
 </footer>
 
+<script src="arc-content.js"></script>
+<script src="i18n.js"></script>
 <script>
 // ── Allocation data ─────────────────────────────────────────────
 const allocData = {
@@ -907,14 +1029,16 @@ slider.addEventListener('input', () => {
   const dC = (d.cagr   - base.cagr).toFixed(2);
   const dV = (d.vol    - base.vol).toFixed(2);
 
+  const vsLbl = (window.ARC_I18N && ARC_I18N.T[ARC_I18N.getLang()]['alloc.vs']) || 'vs pure 60/40';
+  const ppLbl = (window.ARC_I18N && ARC_I18N.T[ARC_I18N.getLang()]['alloc.pp']) || 'pp';
   document.getElementById('dSharpe').innerHTML = a===0 ? '' :
-    `<span class="d-pos">+${dS} vs pure 60/40</span>`;
+    `<span class="d-pos">+${dS} ${vsLbl}</span>`;
   document.getElementById('dDD').innerHTML = a===0 ? '' :
-    `<span class="${dD<0?'d-pos':'d-neg'}">${dD>0?'+':''}${dD}pp vs pure 60/40</span>`;
+    `<span class="${dD<0?'d-pos':'d-neg'}">${dD>0?'+':''}${dD}${ppLbl} ${vsLbl}</span>`;
   document.getElementById('dCAGR').innerHTML = a===0 ? '' :
-    `<span class="${dC>=0?'d-pos':'d-neg'}">${dC>=0?'+':''}${dC}pp vs pure 60/40</span>`;
+    `<span class="${dC>=0?'d-pos':'d-neg'}">${dC>=0?'+':''}${dC}${ppLbl} ${vsLbl}</span>`;
   document.getElementById('dVol').innerHTML = a===0 ? '' :
-    `<span class="${dV<0?'d-pos':'d-neg'}">${dV>=0?'+':''}${dV}pp vs pure 60/40</span>`;
+    `<span class="${dV<0?'d-pos':'d-neg'}">${dV>=0?'+':''}${dV}${ppLbl} ${vsLbl}</span>`;
 
   // Update crisis table (blend CTA stress returns with bench)
   const ctaGFC  = 21.55, ctaCOVID = 25.91, ctaRH = 10.17;

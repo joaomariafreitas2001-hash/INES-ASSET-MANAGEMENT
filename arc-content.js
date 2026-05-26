@@ -56,6 +56,59 @@
       'Um CTA real opera 50–100+ instrumentos. Usamos ETFs por dados gratuitos, acessibilidade institucional sem infra de futuros, e evidência académica que generaliza. Mais instrumentos provavelmente melhorariam o Sharpe.', false)
   ].join('');
 
+  const CLASSES_ES = `
+    <p style="font-size:0.92rem; color:var(--dgray); margin-bottom:1.5rem;">El curso tiene nueve clases principales más una sesión invitada. Nuestro proyecto es el <strong>Quant Fund Pitch</strong>: estrategia sistemática, back-test honesto, marco de riesgo y pitch institucional.</p>
+    <table class="map-table"><thead><tr><th>Clase</th><th>Tema principal</th><th>Dónde aparece en el proyecto</th></tr></thead><tbody>
+      <tr><td class="lec">Clase 1</td><td>Retornos, Sharpe, sesgos, back-tests honestos</td><td>Tabla de rendimiento, disclaimers, IS/OOS, metodología</td></tr>
+      <tr><td class="lec">Clase 2</td><td>Markowitz, CAPM, APT, benchmarks</td><td>Benchmark 60/40; caso allocator</td></tr>
+      <tr><td class="lec">Clase 3</td><td>Riesgo coherente, colas, estrés</td><td>Max drawdown; GFC / COVID / 2022</td></tr>
+      <tr><td class="lec">Clase 4</td><td>HRP, risk parity, vol</td><td>Primera estrategia HRP; CTA con vol-targeting</td></tr>
+      <tr><td class="lec">Clase 5</td><td>Señales, rebalanceo, back-test</td><td>Señal MA mensual; ejecución t→t+1; costes</td></tr>
+      <tr><td class="lec">Invitado</td><td>Agentes IA</td><td>IA declarada; pitch humano</td></tr>
+      <tr><td class="lec">Tarea</td><td>Rúbrica quant pitch</td><td>Deck + notebook + pitch en vivo</td></tr>
+    </tbody></table>
+    <div class="class-grid">
+      <div class="class-card"><div class="class-num">Clase 1</div><h3>Fundamentos de gestión de activos</h3><p class="class-topic">Mercados, retornos, eficiencia — investigación honesta</p><ul><li>Reportamos <strong>CAGR, volatilidad, Sharpe, max drawdown, Calmar, hit rate</strong>.</li><li>Abordamos <strong>look-ahead, survivorship y Sharpe inflado</strong> en <a href="#methodology">Metodología</a>.</li><li>Todo sale de <code>quant_appendix.ipynb</code>, etiquetado como simulado.</li></ul><p class="project-link">→ Resultados y Metodología</p></div>
+      <div class="class-card"><div class="class-num">Clase 2</div><h3>Teoría clásica de carteras</h3><p class="class-topic">Markowitz, CAPM, APT</p><ul><li><strong>Benchmark 60/40</strong> (SPY + IEF) como referencia institucional.</li><li>Primera estrategia: <strong>factores transversales</strong> (momentum, baja vol).</li><li>No competimos con 60/40 en aislamiento; vendemos <strong>diversificación</strong> (correlación ≈ 0).</li></ul><p class="project-link">→ Caso allocator y Fase 1 del Journey</p></div>
+      <div class="class-card"><div class="class-num">Clase 3</div><h3>Medidas de riesgo no gaussianas</h3><p class="class-topic">VaR/CVaR, colas, estrés</p><ul><li><strong>Max drawdown</strong> y retornos en crisis como métricas de cola.</li><li>Tres <strong>escenarios de estrés</strong> (GFC, COVID, 2022).</li><li>Drawdowns del CTA y 60/40 <strong>no coinciden en el tiempo</strong>.</li></ul><p class="project-link">→ Escenarios de estrés</p></div>
+      <div class="class-card"><div class="class-num">Clase 4</div><h3>Construcción avanzada de carteras</h3><p class="class-topic">HRP, risk parity</p><ul><li>Primera estrategia con <strong>HRP</strong> (López de Prado).</li><li>CTA final con <strong>vol-targeting</strong> — igual contribución al riesgo.</li><li>MA dual por <strong>robustez</strong>, no optimización.</li></ul><p class="project-link">→ Estrategia y Journey Fases 1 y 5–6</p></div>
+      <div class="class-card"><div class="class-num">Clase 5</div><h3>Elección dinámica y back-testing</h3><p class="class-topic">Señales, ejecución, gobernanza</p><ul><li><strong>Momentum temporal</strong> (precio vs MA), rebalanceo mensual.</li><li>Señal al cierre de <em>t</em>, posiciones al open de <em>t+1</em>.</li><li><strong>Turnover, costes 5 bps/lado y capacidad</strong> documentados.</li></ul><p class="project-link">→ Apéndice cuantitativo</p></div>
+      <div class="class-card guest"><div class="class-num" style="color:var(--amber);">Clase invitada</div><h3>Agentes IA en finanzas</h3><p class="class-topic">David Pacheco Aznar — uso responsable</p><ul><li>IA permitida con <strong>declaración</strong> — investigación, código, web.</li><li>Sin track record en vivo generado por IA.</li><li>Pitch y Q&A <strong>humanos</strong>.</li></ul><p class="project-link">→ Proceso del equipo</p></div>
+    </div>
+    <div class="info-box" style="margin-top:0.5rem;"><h3>Cómo se mapean los tres entregables</h3><ul>
+      <li><span class="bullet"></span><div><span class="tag">Deck</span> Edge + allocator + estrés — Clases 1–3</div></li>
+      <li><span class="bullet"></span><div><span class="tag">Notebook</span> Back-test IS/OOS — Clases 1, 4, 5</div></li>
+      <li><span class="bullet"></span><div><span class="tag">Pitch</span> Defensa Q&A — sección Q&A Prep</div></li>
+    </ul></div>
+    <p class="disclaimer">Las clases 6–9 no están en la estrategia final; el crowding de factores (Clase 8) explica el abandono del L/S — ver Journey Fase 4.</p>`;
+
+  const CLASSES_PT = `
+    <p style="font-size:0.92rem; color:var(--dgray); margin-bottom:1.5rem;">O curso tem nove aulas principais mais uma sessão convidada. O nosso projeto é o <strong>Quant Fund Pitch</strong>: estratégia sistemática, back-test honesto, quadro de risco e pitch institucional.</p>
+    <table class="map-table"><thead><tr><th>Aula</th><th>Tema principal</th><th>Onde aparece no projeto</th></tr></thead><tbody>
+      <tr><td class="lec">Aula 1</td><td>Retornos, Sharpe, vieses, back-tests honestos</td><td>Tabela de desempenho, disclaimers, IS/OOS, metodologia</td></tr>
+      <tr><td class="lec">Aula 2</td><td>Markowitz, CAPM, APT, benchmarks</td><td>Benchmark 60/40; caso allocator</td></tr>
+      <tr><td class="lec">Aula 3</td><td>Risco coerente, caudas, stress</td><td>Max drawdown; GFC / COVID / 2022</td></tr>
+      <tr><td class="lec">Aula 4</td><td>HRP, risk parity, vol</td><td>Primeira estratégia HRP; CTA com vol-targeting</td></tr>
+      <tr><td class="lec">Aula 5</td><td>Sinais, rebalanceamento, back-test</td><td>Sinal MA mensal; execução t→t+1; custos</td></tr>
+      <tr><td class="lec">Convidado</td><td>Agentes IA</td><td>IA declarada; pitch humano</td></tr>
+      <tr><td class="lec">Tarefa</td><td>Rúbrica quant pitch</td><td>Deck + notebook + pitch ao vivo</td></tr>
+    </tbody></table>
+    <div class="class-grid">
+      <div class="class-card"><div class="class-num">Aula 1</div><h3>Fundamentos de gestão de ativos</h3><p class="class-topic">Mercados, retornos, eficiência — investigação honesta</p><ul><li>Reportamos <strong>CAGR, volatilidade, Sharpe, max drawdown, Calmar, hit rate</strong>.</li><li>Abordamos <strong>look-ahead, survivorship e Sharpe inflado</strong> em <a href="#methodology">Metodologia</a>.</li><li>Tudo vem de <code>quant_appendix.ipynb</code>, etiquetado como simulado.</li></ul><p class="project-link">→ Resultados e Metodologia</p></div>
+      <div class="class-card"><div class="class-num">Aula 2</div><h3>Teoria clássica de carteiras</h3><p class="class-topic">Markowitz, CAPM, APT</p><ul><li><strong>Benchmark 60/40</strong> (SPY + IEF) como referência institucional.</li><li>Primeira estratégia: <strong>fatores transversais</strong> (momentum, baixa vol).</li><li>Não competimos com 60/40 isoladamente; vendemos <strong>diversificação</strong> (correlação ≈ 0).</li></ul><p class="project-link">→ Caso allocator e Fase 1 do Journey</p></div>
+      <div class="class-card"><div class="class-num">Aula 3</div><h3>Medidas de risco não gaussianas</h3><p class="class-topic">VaR/CVaR, caudas, stress</p><ul><li><strong>Max drawdown</strong> e retornos em crises como métricas de cauda.</li><li>Três <strong>cenários de stress</strong> (GFC, COVID, 2022).</li><li>Drawdowns do CTA e 60/40 <strong>não coincidem no tempo</strong>.</li></ul><p class="project-link">→ Cenários de stress</p></div>
+      <div class="class-card"><div class="class-num">Aula 4</div><h3>Construção avançada de carteiras</h3><p class="class-topic">HRP, risk parity</p><ul><li>Primeira estratégia com <strong>HRP</strong> (López de Prado).</li><li>CTA final com <strong>vol-targeting</strong> — igual contribuição ao risco.</li><li>MA dupla por <strong>robustez</strong>, não otimização.</li></ul><p class="project-link">→ Estratégia e Journey Fases 1 e 5–6</p></div>
+      <div class="class-card"><div class="class-num">Aula 5</div><h3>Escolha dinâmica e back-testing</h3><p class="class-topic">Sinais, execução, governação</p><ul><li><strong>Momentum temporal</strong> (preço vs MA), rebalanceamento mensal.</li><li>Sinal no fecho de <em>t</em>, posições na abertura de <em>t+1</em>.</li><li><strong>Turnover, custos 5 bps/lado e capacidade</strong> documentados.</li></ul><p class="project-link">→ Apêndice quantitativo</p></div>
+      <div class="class-card guest"><div class="class-num" style="color:var(--amber);">Aula convidada</div><h3>Agentes IA em finanças</h3><p class="class-topic">David Pacheco Aznar — uso responsável</p><ul><li>IA permitida com <strong>declaração</strong> — investigação, código, web.</li><li>Sem track record em vivo gerado por IA.</li><li>Pitch e Q&A <strong>humanos</strong>.</li></ul><p class="project-link">→ Processo da equipa</p></div>
+    </div>
+    <div class="info-box" style="margin-top:0.5rem;"><h3>Como se mapeiam os três entregáveis</h3><ul>
+      <li><span class="bullet"></span><div><span class="tag">Deck</span> Edge + allocator + stress — Aulas 1–3</div></li>
+      <li><span class="bullet"></span><div><span class="tag">Notebook</span> Back-test IS/OOS — Aulas 1, 4, 5</div></li>
+      <li><span class="bullet"></span><div><span class="tag">Pitch</span> Defesa Q&A — secção Q&A Prep</div></li>
+    </ul></div>
+    <p class="disclaimer">As aulas 6–9 não estão na estratégia final; o crowding de fatores (Aula 8) explica o abandono do L/S — ver Journey Fase 4.</p>`;
+
   window.ARC_TIMELINE = { es: TL_ES, pt: TL_PT };
   window.ARC_QA = { es: QA_ES, pt: QA_PT };
+  window.ARC_CLASSES = { es: CLASSES_ES, pt: CLASSES_PT };
 })();

@@ -85,6 +85,36 @@
     font-size: 0.88rem; color: #8AABB8;
   }
   .process-next strong { color: var(--white); }
+  /* ── CLASSES MAP ── */
+  #classes { background: var(--white); }
+  .class-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-bottom: 2rem; }
+  .class-card {
+    background: var(--offwh); border: 1px solid var(--border);
+    border-radius: 8px; padding: 1.4rem 1.5rem;
+    border-top: 3px solid var(--blue);
+  }
+  .class-card.guest { border-top-color: var(--amber); }
+  .class-card.assign { border-top-color: var(--green); }
+  .class-num {
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em;
+    color: var(--blue); text-transform: uppercase; margin-bottom: 0.35rem;
+  }
+  .class-card h3 { font-size: 1rem; margin-bottom: 0.5rem; }
+  .class-card .class-topic { font-size: 0.82rem; color: var(--mgray); font-style: italic; margin-bottom: 0.75rem; }
+  .class-card ul { padding-left: 1.1rem; font-size: 0.88rem; color: var(--dgray); }
+  .class-card li { margin-bottom: 0.4rem; }
+  .class-card .project-link {
+    margin-top: 0.85rem; padding-top: 0.85rem; border-top: 1px solid var(--border);
+    font-size: 0.85rem; color: var(--navy); font-weight: 600;
+  }
+  .map-table { width: 100%; border-collapse: collapse; font-size: 0.86rem; margin: 1.5rem 0 2rem; }
+  .map-table th { background: var(--navy); color: var(--white); padding: 0.55rem 0.85rem; text-align: left; font-size: 0.8rem; }
+  .map-table td { padding: 0.5rem 0.85rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .map-table tr:nth-child(even) td { background: var(--offwh); }
+  .map-table .lec { font-weight: 700; color: var(--blue); white-space: nowrap; }
+  @media (max-width: 900px) {
+    .class-grid { grid-template-columns: 1fr; }
+  }
   @media (max-width: 768px) {
     nav { padding: 0 1rem; height: auto; min-height: 52px; flex-wrap: wrap; gap: 0.5rem; padding-bottom: 0.5rem; }
     .nav-right { flex-wrap: wrap; }
@@ -298,6 +328,7 @@
   <div class="nav-right">
     <ul class="nav-links">
       <li><a href="#assignment" data-i18n="nav.assignment">Assignment</a></li>
+      <li><a href="#classes" data-i18n="nav.classes">Classes</a></li>
       <li><a href="#process" data-i18n="nav.journey">Our Process</a></li>
       <li><a href="#strategy" data-i18n="nav.strategy">Strategy</a></li>
       <li><a href="#results" data-i18n="nav.results">Results</a></li>
@@ -371,6 +402,156 @@
           <li><span class="bullet"></span><span data-i18n="assign.req5">Address biases, capacity, and risk explicitly</span></li>
         </ul>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- RELATING TO CLASSES -->
+<section id="classes">
+  <div class="container">
+    <p class="section-label" data-i18n="classes.label">Course link</p>
+    <h2 data-i18n="classes.title">Relating our project to the classes</h2>
+    <div class="divider"></div>
+    <p class="section-sub" data-i18n="classes.sub">This section maps every part of Alpha Ridge Capital to what we covered in ESADE Asset Management (Prof. Miquel Noguer i Alonso, AIFI). Use it so the whole group can explain <em>why</em> we built what we built — not just <em>what</em> we built.</p>
+
+    <div id="classes-content">
+
+    <p style="font-size:0.92rem; color:var(--dgray); margin-bottom:1.5rem;" data-i18n="classes.intro">The course has nine core lectures plus a guest session. Our project is the <strong>Quant Fund Pitch</strong> assignment: a systematic strategy, honest back-test, risk framework, and institutional pitch. Below is how each lecture shows up in our work.</p>
+
+    <table class="map-table">
+      <thead>
+        <tr>
+          <th data-i18n="classes.table.lecture">Lecture</th>
+          <th data-i18n="classes.table.topic">Main topic (class)</th>
+          <th data-i18n="classes.table.project">Where you see it in our project</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="lec">Lecture 1</td>
+          <td data-i18n="classes.map.l1.topic">Returns, Sharpe, biases, honest back-tests</td>
+          <td data-i18n="classes.map.l1.proj">Performance table, disclaimers, IS/OOS split, methodology section</td>
+        </tr>
+        <tr>
+          <td class="lec">Lecture 2</td>
+          <td data-i18n="classes.map.l2.topic">Markowitz, CAPM, APT, benchmarks</td>
+          <td data-i18n="classes.map.l2.proj">60/40 benchmark (SPY + IEF); allocator case vs traditional portfolio</td>
+        </tr>
+        <tr>
+          <td class="lec">Lecture 3</td>
+          <td data-i18n="classes.map.l3.topic">Coherent risk, tails, stress</td>
+          <td data-i18n="classes.map.l3.proj">Max drawdown, GFC / COVID / 2022 stress scenarios, crisis tables</td>
+        </tr>
+        <tr>
+          <td class="lec">Lecture 4</td>
+          <td data-i18n="classes.map.l4.topic">HRP, risk parity, vol allocation</td>
+          <td data-i18n="classes.map.l4.proj">First strategy used HRP; final CTA uses vol-targeting (equal risk contribution)</td>
+        </tr>
+        <tr>
+          <td class="lec">Lecture 5</td>
+          <td data-i18n="classes.map.l5.topic">Signals, rebalancing, back-test discipline</td>
+          <td data-i18n="classes.map.l5.proj">Monthly MA signal, t→t+1 execution lag, turnover &amp; transaction costs</td>
+        </tr>
+        <tr>
+          <td class="lec" data-i18n="classes.map.guest.lec">Guest</td>
+          <td data-i18n="classes.map.guest.topic">AI agents in finance</td>
+          <td data-i18n="classes.map.guest.proj">AI used for research &amp; code (disclosed); pitch remains human-delivered</td>
+        </tr>
+        <tr>
+          <td class="lec" data-i18n="classes.map.assign.lec">Assignment</td>
+          <td data-i18n="classes.map.assign.topic">Quant fund pitch rubric</td>
+          <td data-i18n="classes.map.assign.proj">Deck + notebook + live pitch; edge, capacity, Q&amp;A defense</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="class-grid">
+
+      <div class="class-card">
+        <div class="class-num">Lecture 1</div>
+        <h3>Foundations of Asset Management</h3>
+        <p class="class-topic">Markets, returns, noise, efficiency — and honest research</p>
+        <ul>
+          <li>We report <strong>CAGR, volatility, Sharpe, max drawdown, Calmar, hit rate</strong> exactly as in class metrics.</li>
+          <li>Lecture 1 stresses <strong>look-ahead, survivorship, and inflated Sharpe</strong> — we address each in <a href="#methodology">Methodology</a> (signal at <em>t</em>, trade at <em>t+1</em>; no delisted ETFs; OOS Sharpe &gt; IS).</li>
+          <li>Course mantra: <em>real numbers from code</em> — all figures come from <code>quant_appendix.ipynb</code>, labelled simulated.</li>
+        </ul>
+        <p class="project-link">→ Results &amp; Methodology sections</p>
+      </div>
+
+      <div class="class-card">
+        <div class="class-num">Lecture 2</div>
+        <h3>Classical Portfolio Theory</h3>
+        <p class="class-topic">Markowitz, CAPM, APT — and why we need more than 60/40</p>
+        <ul>
+          <li>Our <strong>60/40 benchmark</strong> (60% SPY + 40% IEF) is the standard institutional reference from mean–variance / CAPM thinking.</li>
+          <li>First strategy used <strong>cross-sectional factors</strong> (momentum, low vol) — directly from Lecture 2’s APT / factor framing and Lecture 8 preview.</li>
+          <li>We do <em>not</em> claim to beat 60/40 in isolation; we argue <strong>diversification</strong> (correlation ≈ 0) per the allocator case — a Lecture 2 insight applied correctly.</li>
+        </ul>
+        <p class="project-link">→ Allocator Case &amp; first strategy (Journey Phase 1)</p>
+      </div>
+
+      <div class="class-card">
+        <div class="class-num">Lecture 3</div>
+        <h3>Risk Measures &amp; the Non-Gaussian World</h3>
+        <p class="class-topic">VaR/CVaR, heavy tails, stress beyond variance</p>
+        <ul>
+          <li><strong>Max drawdown</strong> and crisis-period returns are our primary tail-risk metrics (more informative than variance alone for CTAs).</li>
+          <li>Three <strong>stress scenarios</strong> (GFC, COVID, 2022 rate hikes) match Lecture 3’s focus on tail events and non-Gaussian outcomes.</li>
+          <li>We discuss why CTA and 60/40 drawdowns <strong>do not coincide in time</strong> — subadditivity / diversification of tail risk.</li>
+        </ul>
+        <p class="project-link">→ Stress Scenarios &amp; crisis comparison table</p>
+      </div>
+
+      <div class="class-card">
+        <div class="class-num">Lecture 4</div>
+        <h3>Advanced Portfolio Construction</h3>
+        <p class="class-topic">HRP, risk parity, robust weighting</p>
+        <ul>
+          <li>Our <strong>first strategy</strong> used <strong>Hierarchical Risk Parity (HRP)</strong> on S&amp;P 500 stocks — taught explicitly in Lecture 4 (López de Prado).</li>
+          <li>Final CTA uses <strong>volatility targeting</strong> so each ETF contributes equal risk — same philosophy as risk parity / equal risk contribution in Lecture 4.</li>
+          <li>Dual MA (10m + 12m) is a <strong>robustness</strong> choice, not parameter mining — aligned with Lecture 4’s critique of unstable Markowitz inputs.</li>
+        </ul>
+        <p class="project-link">→ Strategy section &amp; Journey Phases 1 and 5–6</p>
+      </div>
+
+      <div class="class-card">
+        <div class="class-num">Lecture 5</div>
+        <h3>Dynamic Portfolio Choice &amp; Back-Testing</h3>
+        <p class="class-topic">Signals, rebalancing, execution, governance</p>
+        <ul>
+          <li><strong>Time-series momentum</strong> (price vs MA) is a dynamic signal rebalance monthly — Lecture 5’s signal → decision pipeline.</li>
+          <li><strong>Ft-measurable weights</strong>: signal at month-end close, positions at next open — no look-ahead (Lecture 5 admissibility).</li>
+          <li>We document <strong>turnover (~37%/month)</strong>, <strong>5 bps/side costs</strong>, and <strong>capacity</strong> — Lecture 5 back-test / governance checklist.</li>
+        </ul>
+        <p class="project-link">→ Quant appendix &amp; Methodology</p>
+      </div>
+
+      <div class="class-card guest">
+        <div class="class-num" style="color:var(--amber);">Guest lecture</div>
+        <h3>AI Agents in Finance</h3>
+        <p class="class-topic">David Pacheco Aznar — agents, tools, responsible use</p>
+        <ul>
+          <li>Assignment <strong>permits AI</strong> with disclosure — we used AI for literature search, Python debugging, deck/website drafting.</li>
+          <li>We do <strong>not</strong> present AI-generated performance as live track record; all returns are simulated from our notebook.</li>
+          <li>Pitch delivery and panel Q&amp;A remain <strong>human</strong> — consistent with governance themes in Lectures 5 and 9.</li>
+        </ul>
+        <p class="project-link">→ Team process &amp; honest labelling throughout</p>
+      </div>
+
+    </div>
+
+    <div class="info-box" style="margin-top:0.5rem;">
+      <h3 data-i18n="classes.deliverables.title">How the three deliverables map to the course</h3>
+      <ul>
+        <li><span class="bullet"></span><div><span class="tag">Deck</span> <span data-i18n="classes.deliverables.d1">Edge + allocator narrative + stress tests — Lectures 1–3, assignment rubric (edge 25 pts, risk 15 pts)</span></div></li>
+        <li><span class="bullet"></span><div><span class="tag">Notebook</span> <span data-i18n="classes.deliverables.d2">Full back-test, IS/OOS, costs — Lectures 1, 4, 5 (quant appendix 25 pts)</span></div></li>
+        <li><span class="bullet"></span><div><span class="tag">Live pitch</span> <span data-i18n="classes.deliverables.d3">Defense under Q&amp;A — assignment (delivery 20 pts); prepared in Q&amp;A Prep section</span></div></li>
+      </ul>
+    </div>
+
+    <p class="disclaimer" data-i18n="classes.note">Lectures 6–9 (RL, microstructure, ML factors, strategic markets) are not directly implemented in this strategy, but Lecture 8’s factor-crowding critique explains why we abandoned equity L/S momentum — see Journey Phase 4.</p>
+
     </div>
   </div>
 </section>

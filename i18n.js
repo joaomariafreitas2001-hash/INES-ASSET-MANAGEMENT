@@ -9,6 +9,7 @@
       'meta.title': 'Alpha Ridge Capital — ESADE Asset Management',
       'nav.brand': 'Alpha Ridge Capital',
       'nav.assignment': 'Assignment',
+      'nav.classes': 'Classes',
       'nav.journey': 'Our Process',
       'nav.strategy': 'Strategy',
       'nav.results': 'Results',
@@ -39,6 +40,34 @@
       'assign.req3': 'Present it to a panel of finance professionals',
       'assign.req4': 'Defend every assumption and parameter choice',
       'assign.req5': 'Address biases, capacity, and risk explicitly',
+      'classes.label': 'Course link',
+      'classes.title': 'Relating our project to the classes',
+      'classes.sub': 'This section maps every part of Alpha Ridge Capital to what we covered in ESADE Asset Management (Prof. Miquel Noguer i Alonso, AIFI). Use it so the whole group can explain why we built what we built — not just what we built.',
+      'classes.intro': 'The course has nine core lectures plus a guest session. Our project is the <strong>Quant Fund Pitch</strong> assignment: a systematic strategy, honest back-test, risk framework, and institutional pitch. Below is how each lecture shows up in our work.',
+      'classes.table.lecture': 'Lecture',
+      'classes.table.topic': 'Main topic (class)',
+      'classes.table.project': 'Where you see it in our project',
+      'classes.map.l1.topic': 'Returns, Sharpe, biases, honest back-tests',
+      'classes.map.l1.proj': 'Performance table, disclaimers, IS/OOS split, methodology section',
+      'classes.map.l2.topic': 'Markowitz, CAPM, APT, benchmarks',
+      'classes.map.l2.proj': '60/40 benchmark (SPY + IEF); allocator case vs traditional portfolio',
+      'classes.map.l3.topic': 'Coherent risk, tails, stress',
+      'classes.map.l3.proj': 'Max drawdown, GFC / COVID / 2022 stress scenarios, crisis tables',
+      'classes.map.l4.topic': 'HRP, risk parity, vol allocation',
+      'classes.map.l4.proj': 'First strategy used HRP; final CTA uses vol-targeting (equal risk contribution)',
+      'classes.map.l5.topic': 'Signals, rebalancing, back-test discipline',
+      'classes.map.l5.proj': 'Monthly MA signal, t→t+1 execution lag, turnover & transaction costs',
+      'classes.map.guest.lec': 'Guest',
+      'classes.map.guest.topic': 'AI agents in finance',
+      'classes.map.guest.proj': 'AI used for research & code (disclosed); pitch remains human-delivered',
+      'classes.map.assign.lec': 'Assignment',
+      'classes.map.assign.topic': 'Quant fund pitch rubric',
+      'classes.map.assign.proj': 'Deck + notebook + live pitch; edge, capacity, Q&A defense',
+      'classes.deliverables.title': 'How the three deliverables map to the course',
+      'classes.deliverables.d1': 'Edge + allocator narrative + stress tests — Lectures 1–3, assignment rubric (edge 25 pts, risk 15 pts)',
+      'classes.deliverables.d2': 'Full back-test, IS/OOS, costs — Lectures 1, 4, 5 (quant appendix 25 pts)',
+      'classes.deliverables.d3': 'Defense under Q&A — assignment (delivery 20 pts); prepared in Q&A Prep section',
+      'classes.note': 'Lectures 6–9 (RL, microstructure, ML factors, strategic markets) are not directly implemented in this strategy, but Lecture 8’s factor-crowding critique explains why we abandoned equity L/S momentum — see Journey Phase 4.',
       'process.label': 'For the team',
       'process.title': 'How we got here',
       'process.sub': 'Full record of our work — from the assignment brief to the CTA strategy we are pitching. Use this section to align before the live presentation.',
@@ -114,6 +143,7 @@
       'meta.title': 'Alpha Ridge Capital — Gestión de Activos ESADE',
       'nav.brand': 'Alpha Ridge Capital',
       'nav.assignment': 'Tarea',
+      'nav.classes': 'Clases',
       'nav.journey': 'Nuestro proceso',
       'nav.strategy': 'Estrategia',
       'nav.results': 'Resultados',
@@ -144,6 +174,34 @@
       'assign.req3': 'Presentar ante un panel de profesionales de finanzas',
       'assign.req4': 'Defender cada supuesto y elección de parámetros',
       'assign.req5': 'Abordar sesgos, capacidad y riesgo explícitamente',
+      'classes.label': 'Vínculo con el curso',
+      'classes.title': 'Relacionar nuestro proyecto con las clases',
+      'classes.sub': 'Esta sección conecta cada parte de Alpha Ridge Capital con lo visto en Gestión de Activos ESADE (Prof. Miquel Noguer i Alonso, AIFI). Úsala para que todo el grupo explique por qué construimos lo que construimos.',
+      'classes.intro': 'El curso tiene nueve clases principales más una sesión invitada. Nuestro proyecto es el <strong>Quant Fund Pitch</strong>: estrategia sistemática, back-test honesto, marco de riesgo y pitch institucional.',
+      'classes.table.lecture': 'Clase',
+      'classes.table.topic': 'Tema principal',
+      'classes.table.project': 'Dónde aparece en el proyecto',
+      'classes.map.l1.topic': 'Retornos, Sharpe, sesgos, back-tests honestos',
+      'classes.map.l1.proj': 'Tabla de rendimiento, disclaimers, IS/OOS, metodología',
+      'classes.map.l2.topic': 'Markowitz, CAPM, APT, benchmarks',
+      'classes.map.l2.proj': 'Benchmark 60/40 (SPY + IEF); caso allocator',
+      'classes.map.l3.topic': 'Riesgo coherente, colas, estrés',
+      'classes.map.l3.proj': 'Max drawdown, escenarios GFC / COVID / 2022',
+      'classes.map.l4.topic': 'HRP, risk parity, asignación por vol',
+      'classes.map.l4.proj': 'Primera estrategia con HRP; CTA final con vol-targeting',
+      'classes.map.l5.topic': 'Señales, rebalanceo, disciplina de back-test',
+      'classes.map.l5.proj': 'Señal MA mensual, ejecución t→t+1, costes y turnover',
+      'classes.map.guest.lec': 'Invitado',
+      'classes.map.guest.topic': 'Agentes IA en finanzas',
+      'classes.map.guest.proj': 'IA para investigación y código (declarado); pitch humano',
+      'classes.map.assign.lec': 'Tarea',
+      'classes.map.assign.topic': 'Rúbrica del quant fund pitch',
+      'classes.map.assign.proj': 'Deck + notebook + pitch en vivo; edge, capacidad, Q&A',
+      'classes.deliverables.title': 'Cómo se mapean los tres entregables',
+      'classes.deliverables.d1': 'Deck: edge + allocator + estrés — Clases 1–3, rúbrica (edge 25 pts, riesgo 15 pts)',
+      'classes.deliverables.d2': 'Notebook: back-test, IS/OOS, costes — Clases 1, 4, 5 (apéndice 25 pts)',
+      'classes.deliverables.d3': 'Pitch en vivo: defensa Q&A — entrega 20 pts; sección Q&A Prep',
+      'classes.note': 'Las clases 6–9 (RL, microestructura, ML, mercados estratégicos) no están en la estrategia final, pero la crítica al crowding de factores (Clase 8) explica el abandono del L/S — ver Fase 4 del Journey.',
       'process.label': 'Para el equipo',
       'process.title': 'Cómo llegamos hasta aquí',
       'process.sub': 'Registro completo del trabajo — desde el brief de la tarea hasta la estrategia CTA que presentamos. Usad esta sección para alinearos antes del pitch en vivo.',
@@ -219,6 +277,7 @@
       'meta.title': 'Alpha Ridge Capital — Gestão de Ativos ESADE',
       'nav.brand': 'Alpha Ridge Capital',
       'nav.assignment': 'Trabalho',
+      'nav.classes': 'Aulas',
       'nav.journey': 'O nosso processo',
       'nav.strategy': 'Estratégia',
       'nav.results': 'Resultados',
@@ -249,6 +308,34 @@
       'assign.req3': 'Apresentar a um painel de profissionais de finanças',
       'assign.req4': 'Defender cada pressuposto e escolha de parâmetros',
       'assign.req5': 'Abordar vieses, capacidade e risco explicitamente',
+      'classes.label': 'Ligação ao curso',
+      'classes.title': 'Relacionar o nosso projeto com as aulas',
+      'classes.sub': 'Esta secção liga cada parte da Alpha Ridge Capital ao que vimos em Gestão de Ativos ESADE (Prof. Miquel Noguer i Alonso, AIFI). Usa-a para toda a equipa explicar por que construímos o que construímos.',
+      'classes.intro': 'O curso tem nove aulas principais mais uma sessão convidada. O nosso projeto é o <strong>Quant Fund Pitch</strong>: estratégia sistemática, back-test honesto, quadro de risco e pitch institucional.',
+      'classes.table.lecture': 'Aula',
+      'classes.table.topic': 'Tema principal',
+      'classes.table.project': 'Onde aparece no projeto',
+      'classes.map.l1.topic': 'Retornos, Sharpe, vieses, back-tests honestos',
+      'classes.map.l1.proj': 'Tabela de desempenho, disclaimers, IS/OOS, metodologia',
+      'classes.map.l2.topic': 'Markowitz, CAPM, APT, benchmarks',
+      'classes.map.l2.proj': 'Benchmark 60/40 (SPY + IEF); caso allocator',
+      'classes.map.l3.topic': 'Risco coerente, caudas, stress',
+      'classes.map.l3.proj': 'Max drawdown, cenários GFC / COVID / 2022',
+      'classes.map.l4.topic': 'HRP, risk parity, alocação por vol',
+      'classes.map.l4.proj': 'Primeira estratégia com HRP; CTA final com vol-targeting',
+      'classes.map.l5.topic': 'Sinais, rebalanceamento, disciplina de back-test',
+      'classes.map.l5.proj': 'Sinal MA mensal, execução t→t+1, custos e turnover',
+      'classes.map.guest.lec': 'Convidado',
+      'classes.map.guest.topic': 'Agentes IA em finanças',
+      'classes.map.guest.proj': 'IA para investigação e código (declarado); pitch humano',
+      'classes.map.assign.lec': 'Tarefa',
+      'classes.map.assign.topic': 'Rúbrica do quant fund pitch',
+      'classes.map.assign.proj': 'Deck + notebook + pitch ao vivo; edge, capacidade, Q&A',
+      'classes.deliverables.title': 'Como se mapeiam os três entregáveis',
+      'classes.deliverables.d1': 'Deck: edge + allocator + stress — Aulas 1–3, rúbrica (edge 25 pts, risco 15 pts)',
+      'classes.deliverables.d2': 'Notebook: back-test, IS/OOS, custos — Aulas 1, 4, 5 (apêndice 25 pts)',
+      'classes.deliverables.d3': 'Pitch ao vivo: defesa Q&A — entrega 20 pts; secção Q&A Prep',
+      'classes.note': 'As aulas 6–9 (RL, microestrutura, ML, mercados estratégicos) não estão na estratégia final, mas a crítica ao crowding de fatores (Aula 8) explica o abandono do L/S — ver Fase 4 do Journey.',
       'process.label': 'Para a equipa',
       'process.title': 'Como chegámos aqui',
       'process.sub': 'Registo completo do trabalho — do brief da tarefa à estratégia CTA que vamos apresentar. Usa esta secção para alinhar antes do pitch ao vivo.',
@@ -356,6 +443,12 @@
       qa.innerHTML = window.ARC_QA[lang];
     }
 
+    const cc = document.getElementById('classes-content');
+    if (cc && window.ARC_CLASSES) {
+      if (lang === 'en' && window.ARC_CLASSES.en) cc.innerHTML = window.ARC_CLASSES.en;
+      else if (window.ARC_CLASSES[lang]) cc.innerHTML = window.ARC_CLASSES[lang];
+    }
+
   }
 
   window.ARC_I18N = { setLang: setLang, getLang: getLang, T: T };
@@ -370,6 +463,11 @@
     if (qa) {
       window.ARC_QA = window.ARC_QA || {};
       window.ARC_QA.en = qa.innerHTML;
+    }
+    const cc = document.getElementById('classes-content');
+    if (cc) {
+      window.ARC_CLASSES = window.ARC_CLASSES || {};
+      window.ARC_CLASSES.en = cc.innerHTML;
     }
 
     document.querySelectorAll('.lang-btn').forEach(function (btn) {

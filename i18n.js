@@ -140,6 +140,11 @@
       'refs.title': 'References',
       'footer.l1': 'Alpha Ridge Capital — ESADE Asset Management Course — June 2025',
       'footer.l2': 'All returns are simulated back-tests. No live track record. Not investment advice. Academic purposes only.',
+      'footer.music': 'Background music: <a href="https://www.youtube.com/watch?v=pTdihu-mp90" target="_blank" rel="noopener noreferrer">James Brown — I Got You (I Feel Good)</a> (via <a href="https://www.youtube.com/watch?v=pTdihu-mp90" target="_blank" rel="noopener noreferrer">YouTube</a>). Rights belong to the respective owners.',
+      'music.label': 'Soundtrack',
+      'music.credit': 'James Brown — I Got You (I Feel Good)',
+      'music.play': 'Play music',
+      'music.pause': 'Pause music',
       'chart.equity': 'Equity curve (top), drawdown (middle), rolling 12-month Sharpe (bottom). Shaded region = OOS 2020–2024.',
       'chart.heatmap': 'Monthly returns heatmap (net). Green = positive month, red = negative.',
       'chart.corr': 'Return correlation matrix. CTA has near-zero correlation with SPY and 60/40.',
@@ -281,6 +286,11 @@
       'refs.title': 'Referencias',
       'footer.l1': 'Alpha Ridge Capital — Gestión de Activos ESADE — Junio 2025',
       'footer.l2': 'Todos los retornos son back-tests simulados. Sin track record en vivo. No es asesoramiento de inversión. Solo fines académicos.',
+      'footer.music': 'Música de fondo: <a href="https://www.youtube.com/watch?v=pTdihu-mp90" target="_blank" rel="noopener noreferrer">James Brown — I Got You (I Feel Good)</a> (vía <a href="https://www.youtube.com/watch?v=pTdihu-mp90" target="_blank" rel="noopener noreferrer">YouTube</a>). Los derechos pertenecen a sus titulares.',
+      'music.label': 'Banda sonora',
+      'music.credit': 'James Brown — I Got You (I Feel Good)',
+      'music.play': 'Reproducir música',
+      'music.pause': 'Pausar música',
       'chart.equity': 'Curva de capital (arriba), drawdown (centro), Sharpe móvil 12 meses (abajo). Zona sombreada = OOS 2020–2024.',
       'chart.heatmap': 'Mapa de calor de retornos mensuales (neto). Verde = mes positivo, rojo = negativo.',
       'chart.corr': 'Matriz de correlación. El CTA tiene correlación casi nula con SPY y 60/40.',
@@ -422,6 +432,11 @@
       'refs.title': 'Referências',
       'footer.l1': 'Alpha Ridge Capital — Gestão de Ativos ESADE — Junho 2025',
       'footer.l2': 'Todos os retornos são back-tests simulados. Sem track record em vivo. Não é aconselhamento de investimento. Apenas fins académicos.',
+      'footer.music': 'Música de fundo: <a href="https://www.youtube.com/watch?v=pTdihu-mp90" target="_blank" rel="noopener noreferrer">James Brown — I Got You (I Feel Good)</a> (via <a href="https://www.youtube.com/watch?v=pTdihu-mp90" target="_blank" rel="noopener noreferrer">YouTube</a>). Os direitos pertencem aos respetivos titulares.',
+      'music.label': 'Banda sonora',
+      'music.credit': 'James Brown — I Got You (I Feel Good)',
+      'music.play': 'Reproduzir música',
+      'music.pause': 'Pausar música',
       'chart.equity': 'Curva de capital (topo), drawdown (meio), Sharpe móvel 12 meses (fundo). Zona sombreada = OOS 2020–2024.',
       'chart.heatmap': 'Mapa de calor de retornos mensais (líquido). Verde = mês positivo, vermelho = negativo.',
       'chart.corr': 'Matriz de correlação. O CTA tem correlação quase nula com SPY e 60/40.',
@@ -455,6 +470,9 @@
     });
 
     updateNavAria();
+    if (window.ARC_MUSIC && typeof window.ARC_MUSIC.refreshLabels === 'function') {
+      window.ARC_MUSIC.refreshLabels();
+    }
 
     const tl = document.getElementById('journey-timeline');
     if (tl && window.ARC_TIMELINE && window.ARC_TIMELINE[lang]) {
@@ -511,5 +529,8 @@
     });
     setLang(getLang());
     updateNavAria();
+    if (window.ARC_MUSIC && typeof window.ARC_MUSIC.refreshLabels === 'function') {
+      window.ARC_MUSIC.refreshLabels();
+    }
   });
 })();

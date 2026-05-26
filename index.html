@@ -445,6 +445,75 @@
     display: flex; gap: 0.2rem; background: rgba(255,255,255,0.06);
     border-radius: 6px; padding: 0.2rem;
   }
+
+  /* ── MUSIC ── */
+  .yt-player-host {
+    position: fixed; width: 1px; height: 1px; left: -9999px; top: 0;
+    overflow: hidden; opacity: 0; pointer-events: none;
+  }
+  .music-prompt, .music-fab { z-index: 150; }
+  .music-prompt.is-hidden, .music-fab.is-hidden { display: none !important; }
+  .music-prompt {
+    position: fixed; bottom: 1.25rem; left: 50%; transform: translateX(-50%);
+    width: min(520px, calc(100% - 2rem));
+    transition: opacity 0.35s, transform 0.35s;
+  }
+  .music-prompt.is-dismissed {
+    opacity: 0; pointer-events: none; transform: translateX(-50%) translateY(12px);
+  }
+  .music-prompt-inner {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 0.65rem 1rem;
+    background: var(--navy); color: var(--white);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 10px; padding: 0.85rem 1rem 0.85rem 1.15rem;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.35);
+  }
+  .music-prompt-text { flex: 1; min-width: 140px; }
+  .music-prompt-label {
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em;
+    text-transform: uppercase; color: #6A8CA0; margin-bottom: 0.2rem;
+  }
+  .music-credit {
+    font-size: 0.82rem; color: #8AABB8; text-decoration: none;
+    border-bottom: 1px solid rgba(138,171,184,0.35);
+  }
+  .music-credit:hover { color: var(--white); }
+  .music-play-btn {
+    border: none; cursor: pointer; border-radius: 6px;
+    background: var(--blue); color: var(--white);
+    font-family: 'Inter', sans-serif; font-size: 0.85rem; font-weight: 700;
+    padding: 0.55rem 1.1rem; white-space: nowrap;
+    transition: background 0.15s;
+  }
+  .music-play-btn:hover { background: #2a7bc4; }
+  .music-dismiss {
+    border: none; background: transparent; color: #6A8CA0;
+    font-size: 1.35rem; line-height: 1; cursor: pointer; padding: 0 0.25rem;
+    margin-left: auto;
+  }
+  .music-dismiss:hover { color: var(--white); }
+  .music-fab {
+    position: fixed; bottom: 1.25rem; right: 1.25rem;
+  }
+  .music-fab.is-hidden { display: none !important; }
+  body:not(.gate-active) .music-prompt:not(.is-dismissed) ~ .music-fab,
+  .music-prompt:not(.is-hidden):not(.is-dismissed) + .music-fab {
+    bottom: 5.5rem;
+  }
+  #music-fab-btn {
+    width: 48px; height: 48px; border-radius: 50%; border: none; cursor: pointer;
+    background: var(--navy); color: var(--white);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+    font-size: 1.2rem; line-height: 1;
+    transition: background 0.2s, transform 0.2s;
+  }
+  #music-fab-btn:hover { transform: scale(1.06); background: var(--navy-l); }
+  #music-fab-btn.is-playing { background: var(--blue); }
+  @media (max-width: 600px) {
+    .music-prompt { bottom: 0.75rem; width: calc(100% - 1.25rem); }
+    .music-fab { bottom: 0.75rem; right: 0.75rem; }
+    .music-prompt:not(.is-hidden):not(.is-dismissed) + .music-fab { bottom: 6.25rem; }
+  }
 </style>
 </head>
 <body class="gate-active">
@@ -466,6 +535,24 @@
 </div>
 
 <div id="site-main">
+
+<!-- Hidden YouTube player (audio via IFrame API) -->
+<div id="yt-music-player" class="yt-player-host" aria-hidden="true"></div>
+
+<!-- Music prompt (after landing) -->
+<div id="music-prompt" class="music-prompt is-hidden" role="region" aria-label="Background music">
+  <div class="music-prompt-inner">
+    <div class="music-prompt-text">
+      <div class="music-prompt-label" data-i18n="music.label">Soundtrack</div>
+      <a class="music-credit" data-music-watch href="https://www.youtube.com/watch?v=pTdihu-mp90" target="_blank" rel="noopener noreferrer" data-i18n="music.credit">James Brown — I Got You (I Feel Good)</a>
+    </div>
+    <button type="button" class="music-play-btn" id="music-play-btn" data-i18n="music.play">Play music</button>
+    <button type="button" class="music-dismiss" id="music-dismiss" aria-label="Dismiss">&times;</button>
+  </div>
+</div>
+<div id="music-fab" class="music-fab is-hidden">
+  <button type="button" id="music-fab-btn" aria-label="Play music">&#9835;</button>
+</div>
 
 <!-- NAV -->
 <nav id="main-nav">
@@ -1220,6 +1307,7 @@
   <div class="container">
     <p data-i18n="footer.l1">Alpha Ridge Capital — ESADE Asset Management Course — June 2025</p>
     <p style="margin-top:0.4rem;" data-i18n="footer.l2">All returns are simulated back-tests. No live track record. Not investment advice. Academic purposes only.</p>
+    <p style="margin-top:0.75rem; font-size:0.75rem;" data-i18n="footer.music" data-i18n-html="true">Background music: <a href="https://www.youtube.com/watch?v=pTdihu-mp90" target="_blank" rel="noopener noreferrer">James Brown — I Got You (I Feel Good)</a> (via <a href="https://www.youtube.com/watch?v=pTdihu-mp90" target="_blank" rel="noopener noreferrer">YouTube</a>). Rights belong to the respective owners.</p>
   </div>
 </footer>
 
@@ -1227,6 +1315,7 @@
 
 <script src="arc-content.js"></script>
 <script src="i18n.js"></script>
+<script src="music-player.js"></script>
 <script>
 // ── Allocation data ─────────────────────────────────────────────
 const allocData = {
@@ -1463,6 +1552,9 @@ function toggleQA(el) {
     if (gate) gate.classList.add('gate-hidden');
     window.scrollTo(0, 0);
     if (enterBtn) enterBtn.blur();
+    if (window.ARC_MUSIC && typeof window.ARC_MUSIC.show === 'function') {
+      window.ARC_MUSIC.show();
+    }
   }
 
   if (enterBtn) {

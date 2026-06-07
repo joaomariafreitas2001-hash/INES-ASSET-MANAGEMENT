@@ -168,19 +168,39 @@
   .capacity-band strong { color: var(--white); }
 
   #allocator { background: var(--offwh); }
-  .alloc-layout { display: grid; grid-template-columns: 1fr 400px; gap: 2.5rem; align-items: start; }
+  .alloc-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 380px);
+    grid-template-areas:
+      "slider chart"
+      "metrics chart"
+      "table chart"
+      "why chart";
+    gap: 1.25rem 2.5rem;
+    align-items: start;
+  }
+  .alloc-slider { grid-area: slider; min-width: 0; }
+  .alloc-metrics { grid-area: metrics; min-width: 0; }
+  .alloc-table { grid-area: table; min-width: 0; }
+  .alloc-why { grid-area: why; min-width: 0; }
+  .alloc-chart { grid-area: chart; min-width: 0; position: sticky; top: 5rem; }
   .slider-wrap label { font-size: 0.88rem; font-weight: 600; color: var(--navy); display: flex; justify-content: space-between; margin-bottom: 0.6rem; }
   .slider-wrap label span { color: var(--blue); font-family: Georgia, serif; font-size: 1rem; }
   input[type=range] { width: 100%; accent-color: var(--blue); }
-  .alloc-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.25rem 0; }
-  .metric-box { background: var(--white); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; text-align: center; }
+  .alloc-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .metric-box { background: var(--white); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; text-align: center; min-width: 0; }
   .metric-val { font-family: Georgia, serif; font-size: 1.8rem; font-weight: 700; }
   .metric-lbl { font-size: 0.76rem; color: var(--mgray); }
-  .metric-delta { font-size: 0.76rem; font-weight: 700; margin-top: 0.2rem; }
+  .metric-delta { font-size: 0.76rem; font-weight: 700; margin-top: 0.2rem; word-break: break-word; }
   .d-pos { color: var(--green); } .d-neg { color: var(--red); }
-  .why-20 { background: var(--white); border: 1px solid var(--border); border-left: 4px solid var(--blue); border-radius: 0 8px 8px 0; padding: 1.2rem; font-size: 0.88rem; margin-top: 1.25rem; }
-  .chart-canvas-wrap { background: var(--white); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; max-width: 100%; overflow: hidden; }
-  .chart-canvas-wrap canvas { max-width: 100% !important; height: auto !important; }
+  .why-20 {
+    background: var(--white); border: 1px solid var(--border); border-left: 4px solid var(--blue);
+    border-radius: 0 8px 8px 0; padding: 1.2rem; font-size: 0.88rem; line-height: 1.55;
+    overflow-wrap: break-word; word-break: break-word; max-width: 100%;
+  }
+  .chart-canvas-wrap { background: var(--white); border: 1px solid var(--border); border-radius: 8px; padding: 0.75rem; width: 100%; max-width: 100%; box-sizing: border-box; }
+  .chart-canvas-inner { position: relative; width: 100%; height: 300px; }
+  .chart-caption-text { font-size: 0.75rem; color: var(--mgray); margin-top: 0.6rem; text-align: center; line-height: 1.45; padding: 0 0.25rem; }
 
   #terms { background: var(--white); }
   .terms-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
@@ -204,7 +224,14 @@
     #main-nav.nav-open .nav-panel { display: block; }
     .nav-links { flex-direction: column; gap: 0; }
     .nav-links a { display: block; padding: 0.85rem 1.25rem; font-size: 0.95rem; white-space: normal; }
-    .highlight-row, .pain-grid, .mech-grid, .strat-row, .rules-grid, .risk-split, .stress-grid, .alloc-layout, .terms-grid, .close-grid, .edge-block { grid-template-columns: 1fr; }
+    .highlight-row, .pain-grid, .mech-grid, .strat-row, .rules-grid, .risk-split, .stress-grid, .terms-grid, .close-grid, .edge-block { grid-template-columns: 1fr; }
+    .alloc-layout {
+      grid-template-columns: 1fr;
+      grid-template-areas: "slider" "metrics" "chart" "table" "why";
+      gap: 1.25rem;
+    }
+    .alloc-chart { position: static; }
+    .chart-canvas-inner { height: 260px; }
     .team-photo-lg { width: 150px; height: 150px; }
     .team-showcase { gap: 2.5rem; }
     .edge-num { font-size: 4rem; }
@@ -243,6 +270,11 @@
     .etf-table, .results-table, .crisis-table, .ctrl-table, .alloc-table { font-size: 0.8rem; }
     .formula-box { padding: 1rem; }
     .formula-box code { font-size: 0.78rem; }
+    .why-20 { padding: 1rem; font-size: 0.84rem; }
+    .chart-canvas-wrap { padding: 0.65rem; }
+    .chart-canvas-inner { height: 220px; }
+    .crisis-table { min-width: 0; }
+    .alloc-table .table-scroll { margin-bottom: 0; }
   }
 </style>
 </head>
@@ -509,32 +541,32 @@
     <p class="section-sub">Blended portfolio = (1−α) × 60/40 + α × CTA, monthly rebalanced. We sell diversification, not standalone outperformance.</p>
 
     <div class="alloc-layout">
-      <div>
-        <div class="slider-wrap">
-          <label>CTA Allocation <span id="allocPct">20%</span></label>
-          <input type="range" id="allocSlider" min="0" max="40" step="5" value="20">
-        </div>
-        <div class="alloc-metrics">
-          <div class="metric-box"><div class="metric-val" id="mCAGR">7.79%</div><div class="metric-lbl">Blended CAGR</div><div class="metric-delta" id="dCAGR"></div></div>
-          <div class="metric-box"><div class="metric-val text-blue" id="mSharpe">1.05</div><div class="metric-lbl">Sharpe Ratio</div><div class="metric-delta" id="dSharpe"></div></div>
-          <div class="metric-box"><div class="metric-val text-red" id="mDD">−15.4%</div><div class="metric-lbl">Max Drawdown</div><div class="metric-delta" id="dDD"></div></div>
-          <div class="metric-box"><div class="metric-val" id="mVol">7.41%</div><div class="metric-lbl">Ann. Volatility</div><div class="metric-delta" id="dVol"></div></div>
-        </div>
-        <div class="table-scroll"><table class="crisis-table">
-          <thead><tr><th>Crisis</th><th>Pure 60/40</th><th id="blendedLabel">80/20</th><th>Delta</th></tr></thead>
-          <tbody>
-            <tr><td>GFC 2008–09</td><td class="text-red">−3.9%</td><td id="c1" class="text-green">+1.6%</td><td id="d1" class="text-green">+5.5 pp</td></tr>
-            <tr><td>COVID 2020</td><td>+16.0%</td><td id="c2">+18.5%</td><td id="d2" class="text-green">+2.5 pp</td></tr>
-            <tr><td>2022 Rate-Hike</td><td class="text-red">−16.7%</td><td id="c3" class="text-green">−10.9%</td><td id="d3" class="text-green">+5.8 pp</td></tr>
-          </tbody>
-        </table></div>
-        <div class="why-20">
-          <strong>Why 20% (not 30% where Sharpe peaks):</strong> Conservative entry, easily scalable, leaves room for other alternatives. Sharpe +25% (0.84→1.05), max DD halved (−29.5%→−15.4%), CAGR cost only −11 bps.
-        </div>
+      <div class="slider-wrap alloc-slider">
+        <label>CTA Allocation <span id="allocPct">20%</span></label>
+        <input type="range" id="allocSlider" min="0" max="40" step="5" value="20">
       </div>
-      <div class="chart-canvas-wrap">
-        <canvas id="allocChart" height="300"></canvas>
-        <p style="font-size:0.75rem;color:var(--mgray);margin-top:0.6rem;text-align:center;">Sharpe (blue) and max drawdown (red) vs CTA allocation</p>
+      <div class="alloc-metrics">
+        <div class="metric-box"><div class="metric-val" id="mCAGR">7.79%</div><div class="metric-lbl">Blended CAGR</div><div class="metric-delta" id="dCAGR"></div></div>
+        <div class="metric-box"><div class="metric-val text-blue" id="mSharpe">1.05</div><div class="metric-lbl">Sharpe Ratio</div><div class="metric-delta" id="dSharpe"></div></div>
+        <div class="metric-box"><div class="metric-val text-red" id="mDD">−15.4%</div><div class="metric-lbl">Max Drawdown</div><div class="metric-delta" id="dDD"></div></div>
+        <div class="metric-box"><div class="metric-val" id="mVol">7.41%</div><div class="metric-lbl">Ann. Volatility</div><div class="metric-delta" id="dVol"></div></div>
+      </div>
+      <div class="chart-canvas-wrap alloc-chart">
+        <div class="chart-canvas-inner">
+          <canvas id="allocChart"></canvas>
+        </div>
+        <p class="chart-caption-text">Sharpe (blue) and max drawdown (red) vs CTA allocation</p>
+      </div>
+      <div class="table-scroll alloc-table"><table class="crisis-table">
+        <thead><tr><th>Crisis</th><th>Pure 60/40</th><th id="blendedLabel">80/20</th><th>Delta</th></tr></thead>
+        <tbody>
+          <tr><td>GFC 2008–09</td><td class="text-red">−3.9%</td><td id="c1" class="text-green">+1.6%</td><td id="d1" class="text-green">+5.5 pp</td></tr>
+          <tr><td>COVID 2020</td><td>+16.0%</td><td id="c2">+18.5%</td><td id="d2" class="text-green">+2.5 pp</td></tr>
+          <tr><td>2022 Rate-Hike</td><td class="text-red">−16.7%</td><td id="c3" class="text-green">−10.9%</td><td id="d3" class="text-green">+5.8 pp</td></tr>
+        </tbody>
+      </table></div>
+      <div class="why-20 alloc-why">
+        <strong>Why 20% (not 30% where Sharpe peaks):</strong> Conservative entry, easily scalable, leaves room for other alternatives. Sharpe +25% (0.84→1.05), max DD halved (−29.5%→−15.4%), CAGR cost only −11 bps.
       </div>
     </div>
   </div>
@@ -596,25 +628,61 @@ const allocData = {
 const labels = [0,5,10,15,20,25,30,35,40];
 let currentAlloc = 20;
 
+const isMobileChart = () => window.matchMedia('(max-width: 640px)').matches;
+const chartFont = () => isMobileChart() ? 8 : 10;
+const chartTick = () => isMobileChart() ? 7 : 9;
+
 const ctx = document.getElementById('allocChart').getContext('2d');
 const allocChart = new Chart(ctx, {
   type: 'line',
   data: {
     labels: labels.map(x => x+'%'),
     datasets: [
-      { label: 'Sharpe', data: labels.map(x => allocData[x].sharpe), borderColor: '#2166AC', backgroundColor: 'rgba(33,102,172,0.08)', yAxisID: 'y1', borderWidth: 2.5, pointRadius: 4, tension: 0.3, fill: true },
-      { label: 'Max DD (%)', data: labels.map(x => allocData[x].dd), borderColor: '#D6604D', backgroundColor: 'rgba(214,96,77,0.06)', yAxisID: 'y2', borderWidth: 2, pointRadius: 4, tension: 0.3, fill: true, borderDash: [5,3] }
+      { label: 'Sharpe', data: labels.map(x => allocData[x].sharpe), borderColor: '#2166AC', backgroundColor: 'rgba(33,102,172,0.08)', yAxisID: 'y1', borderWidth: 2.5, pointRadius: 3, tension: 0.3, fill: true },
+      { label: 'Max DD (%)', data: labels.map(x => allocData[x].dd), borderColor: '#D6604D', backgroundColor: 'rgba(214,96,77,0.06)', yAxisID: 'y2', borderWidth: 2, pointRadius: 3, tension: 0.3, fill: true, borderDash: [5,3] }
     ]
   },
   options: {
     responsive: true,
-    plugins: { legend: { position: 'bottom', labels: { font: { size: 10 }, boxWidth: 14 } } },
+    maintainAspectRatio: false,
+    layout: { padding: { left: 0, right: 4, top: 4, bottom: 0 } },
+    plugins: {
+      legend: {
+        position: 'bottom',
+        labels: { font: { size: chartFont() }, boxWidth: 12, padding: 10 }
+      }
+    },
     scales: {
-      y1: { type: 'linear', position: 'left', title: { display: true, text: 'Sharpe', color: '#2166AC', font: { size: 10 } }, ticks: { color: '#2166AC', font: { size: 9 } } },
-      y2: { type: 'linear', position: 'right', title: { display: true, text: 'Max DD %', color: '#D6604D', font: { size: 10 } }, grid: { drawOnChartArea: false }, ticks: { color: '#D6604D', font: { size: 9 }, callback: v => v+'%' } },
-      x: { ticks: { font: { size: 9 } } }
+      y1: {
+        type: 'linear', position: 'left',
+        title: { display: !isMobileChart(), text: 'Sharpe', color: '#2166AC', font: { size: chartFont() } },
+        ticks: { color: '#2166AC', font: { size: chartTick() }, maxTicksLimit: 6 }
+      },
+      y2: {
+        type: 'linear', position: 'right',
+        title: { display: !isMobileChart(), text: 'Max DD %', color: '#D6604D', font: { size: chartFont() } },
+        grid: { drawOnChartArea: false },
+        ticks: { color: '#D6604D', font: { size: chartTick() }, maxTicksLimit: 6, callback: v => v+'%' }
+      },
+      x: { ticks: { font: { size: chartTick() }, maxRotation: 0, autoSkip: true, maxTicksLimit: 9 } }
     }
   }
+});
+
+let resizeTimer;
+window.addEventListener('resize', () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(() => {
+    const mobile = isMobileChart();
+    allocChart.options.plugins.legend.labels.font.size = mobile ? 8 : 10;
+    allocChart.options.scales.y1.title.display = !mobile;
+    allocChart.options.scales.y2.title.display = !mobile;
+    allocChart.options.scales.y1.ticks.font.size = mobile ? 7 : 9;
+    allocChart.options.scales.y2.ticks.font.size = mobile ? 7 : 9;
+    allocChart.options.scales.x.ticks.font.size = mobile ? 7 : 9;
+    allocChart.resize();
+    allocChart.update('none');
+  }, 150);
 });
 
 Chart.register({

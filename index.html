@@ -628,6 +628,25 @@ const isMobileChart = () => window.matchMedia('(max-width: 640px)').matches;
 const chartFont = () => isMobileChart() ? 8 : 10;
 const chartTick = () => isMobileChart() ? 7 : 9;
 
+Chart.register({
+  id: 'vline',
+  afterDraw(chart) {
+    const i = labels.indexOf(currentAlloc);
+    if (i < 0) return;
+    const x = chart.getDatasetMeta(0).data[i].x;
+    const ctx2 = chart.ctx;
+    ctx2.save();
+    ctx2.setLineDash([4,3]);
+    ctx2.beginPath();
+    ctx2.moveTo(x, chart.chartArea.top);
+    ctx2.lineTo(x, chart.chartArea.bottom);
+    ctx2.lineWidth = 1.5;
+    ctx2.strokeStyle = '#1A7A4A';
+    ctx2.stroke();
+    ctx2.restore();
+  }
+});
+
 const ctx = document.getElementById('allocChart').getContext('2d');
 const allocChart = new Chart(ctx, {
   type: 'line',
@@ -681,25 +700,6 @@ window.addEventListener('resize', () => {
   }, 150);
 });
 
-Chart.register({
-  id: 'vline',
-  afterDraw(chart) {
-    const i = labels.indexOf(currentAlloc);
-    if (i < 0) return;
-    const x = chart.getDatasetMeta(0).data[i].x;
-    const ctx2 = chart.ctx;
-    ctx2.save();
-    ctx2.setLineDash([4,3]);
-    ctx2.beginPath();
-    ctx2.moveTo(x, chart.chartArea.top);
-    ctx2.lineTo(x, chart.chartArea.bottom);
-    ctx2.lineWidth = 1.5;
-    ctx2.strokeStyle = '#1A7A4A';
-    ctx2.stroke();
-    ctx2.restore();
-  }
-});
-
 const slider = document.getElementById('allocSlider');
 slider.addEventListener('input', () => {
   const a = parseInt(slider.value, 10);
@@ -749,10 +749,12 @@ slider.dispatchEvent(new Event('input'));
   toggle.addEventListener('click', () => setOpen(!nav.classList.contains('nav-open')));
   overlay.addEventListener('click', () => setOpen(false));
 
-  nav.querySelectorAll('.nav-links a, .nav-brand').forEach(link => {
+  document.querySelectorAll('a[href^="#"]').forEach(link => {
     link.addEventListener('click', (e) => {
       const href = link.getAttribute('href');
-      if (!href || !href.startsWith('#')) return;
+      if (!href || href === '#') return;
+      const target = document.querySelector(href);
+      if (!target) return;
       e.preventDefault();
       setOpen(false);
       requestAnimationFrame(() => scrollToSection(link));

@@ -15,8 +15,9 @@
     --red: #D6604D; --amber: #D6804D; --white: #FFFFFF; --offwh: #F7F8FA;
     --lgray: #EDEEF1; --dgray: #333333; --mgray: #7A8A9A; --border: #D8DCE2;
   }
-  html { scroll-behavior: smooth; scroll-padding-top: 4.5rem; }
-  body { font-family: 'Inter', sans-serif; background: var(--offwh); color: var(--dgray); line-height: 1.6; }
+  html { scroll-behavior: smooth; scroll-padding-top: 4.5rem; overflow-x: hidden; width: 100%; }
+  body { font-family: 'Inter', sans-serif; background: var(--offwh); color: var(--dgray); line-height: 1.6; overflow-x: hidden; width: 100%; max-width: 100%; }
+  img { max-width: 100%; height: auto; }
   section { padding: 5rem 0; scroll-margin-top: 4.5rem; }
   #hero { scroll-margin-top: 0; }
   .container { max-width: 1100px; margin: 0 auto; padding: 0 2.5rem; }
@@ -32,14 +33,14 @@
   .text-blue { color: var(--blue); } .text-green { color: var(--green); } .text-red { color: var(--red); }
   .disclaimer { font-size: 0.75rem; color: var(--mgray); background: var(--lgray); border-radius: 6px; padding: 0.75rem 1rem; margin-top: 1.5rem; }
 
-  #main-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: var(--navy); box-shadow: 0 2px 12px rgba(0,0,0,0.3); }
-  .nav-bar { display: flex; align-items: center; justify-content: space-between; padding: 0 1.5rem; height: 52px; position: relative; }
-  .nav-brand { display: flex; align-items: center; text-decoration: none; flex-shrink: 0; }
-  .nav-logo { height: 40px; width: auto; display: block; }
+  #main-nav { position: fixed; top: 0; left: 0; right: 0; width: 100%; z-index: 100; background: var(--navy); box-shadow: 0 2px 12px rgba(0,0,0,0.3); }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0 1rem; height: 56px; position: relative; width: 100%; max-width: 100%; }
+  .nav-brand { display: flex; align-items: center; text-decoration: none; flex-shrink: 0; min-width: 0; }
+  .nav-logo { height: 38px; width: auto; display: block; object-fit: contain; }
   .nav-links { display: flex; gap: 1rem; list-style: none; }
   .nav-links a { color: #8AABB8; text-decoration: none; font-size: 0.78rem; font-weight: 500; white-space: nowrap; }
   .nav-links a:hover { color: var(--white); }
-  .nav-toggle { display: none; width: 40px; height: 40px; border: none; border-radius: 6px; background: rgba(255,255,255,0.08); cursor: pointer; }
+  .nav-toggle { display: none; flex-shrink: 0; width: 44px; height: 44px; border: none; border-radius: 8px; background: rgba(255,255,255,0.08); cursor: pointer; }
   .nav-toggle-icon, .nav-toggle-icon::before, .nav-toggle-icon::after { display: block; width: 20px; height: 2px; background: var(--white); border-radius: 1px; }
   .nav-toggle-icon { position: relative; margin: 0 auto; }
   .nav-toggle-icon::before, .nav-toggle-icon::after { content: ''; position: absolute; left: 0; }
@@ -47,7 +48,13 @@
   #main-nav.nav-open .nav-toggle-icon { background: transparent; }
   #main-nav.nav-open .nav-toggle-icon::before { top: 0; transform: rotate(45deg); }
   #main-nav.nav-open .nav-toggle-icon::after { top: 0; transform: rotate(-45deg); }
-  .nav-overlay { display: none; position: fixed; inset: 0; top: 52px; background: rgba(5,28,44,0.45); }
+  @media (min-width: 961px) {
+    .nav-inner { padding: 0 1.5rem; height: 52px; }
+    .nav-panel { display: block !important; position: static; flex: 1; margin-left: 1rem; }
+    .nav-toggle { display: none !important; }
+    .nav-links { justify-content: flex-end; }
+  }
+  .nav-overlay { display: none; position: fixed; inset: 0; top: 56px; background: rgba(5,28,44,0.45); }
   #main-nav.nav-open .nav-overlay { display: block; }
 
   #hero {
@@ -74,7 +81,7 @@
     transition: background 0.2s, transform 0.2s;
   }
   .hero-cta:hover { background: #f0f4f8; transform: translateY(-1px); }
-  .hero-disclaimer { font-size: 0.72rem; color: #4A6880; margin-top: 1.75rem; max-width: 520px; margin-left: auto; margin-right: auto; }
+  .hero-disclaimer { font-size: 0.78rem; color: #8AAFC5; margin-top: 1.75rem; max-width: 520px; margin-left: auto; margin-right: auto; line-height: 1.5; }
 
   #team { background: var(--white); padding: 5.5rem 0 4.5rem; border-bottom: 1px solid var(--border); }
   .team-showcase {
@@ -119,7 +126,8 @@
   .mech-card { background: var(--white); border: 1px solid var(--border); border-left: 4px solid var(--navy); border-radius: 0 8px 8px 0; padding: 1.2rem; font-size: 0.88rem; }
   .mech-card strong { display: block; margin-bottom: 0.4rem; color: var(--navy); }
   .strat-row { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2.5rem; }
-  .etf-table, .results-table, .crisis-table, .ctrl-table, .alloc-table { width: 100%; border-collapse: collapse; font-size: 0.86rem; }
+  .table-scroll { width: 100%; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 1rem; }
+  .etf-table, .results-table, .crisis-table, .ctrl-table, .alloc-table { width: 100%; min-width: 520px; border-collapse: collapse; font-size: 0.86rem; }
   .etf-table th, .results-table th, .crisis-table th, .ctrl-table th, .alloc-table th { background: var(--navy); color: var(--white); padding: 0.55rem 0.8rem; text-align: left; font-size: 0.8rem; }
   .results-table th, .crisis-table th, .alloc-table th { text-align: center; }
   .results-table th:first-child, .crisis-table th:first-child, .alloc-table th:first-child { text-align: left; }
@@ -133,7 +141,7 @@
   .at-eq { background: #EEF3FA; color: var(--blue); } .at-bond { background: #EFF8F3; color: var(--green); }
   .at-cmd { background: #FFF8EE; color: var(--amber); } .at-fx { background: #F5EFFE; color: #7040C0; }
   .formula-box { background: var(--navy); border-radius: 8px; padding: 1.4rem 1.6rem; }
-  .formula-box code { color: #7EC8E3; font-family: 'Courier New', monospace; font-size: 0.9rem; line-height: 1.9; display: block; }
+  .formula-box code { color: #7EC8E3; font-family: 'Courier New', monospace; font-size: 0.9rem; line-height: 1.9; display: block; overflow-x: auto; word-break: break-word; white-space: pre-wrap; }
   .formula-label { color: #4A7090; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5rem; }
   .rules-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 2rem; }
   .rule-card { background: var(--white); border: 1px solid var(--border); border-radius: 8px; padding: 1.1rem; text-align: center; }
@@ -171,7 +179,8 @@
   .metric-delta { font-size: 0.76rem; font-weight: 700; margin-top: 0.2rem; }
   .d-pos { color: var(--green); } .d-neg { color: var(--red); }
   .why-20 { background: var(--white); border: 1px solid var(--border); border-left: 4px solid var(--blue); border-radius: 0 8px 8px 0; padding: 1.2rem; font-size: 0.88rem; margin-top: 1.25rem; }
-  .chart-canvas-wrap { background: var(--white); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; }
+  .chart-canvas-wrap { background: var(--white); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; max-width: 100%; overflow: hidden; }
+  .chart-canvas-wrap canvas { max-width: 100% !important; height: auto !important; }
 
   #terms { background: var(--white); }
   .terms-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
@@ -191,22 +200,56 @@
 
   @media (max-width: 960px) {
     .nav-toggle { display: flex; align-items: center; justify-content: center; }
-    .nav-panel { display: none; position: absolute; top: 100%; left: 0; right: 0; background: var(--navy-l); border-top: 1px solid rgba(255,255,255,0.08); padding: 0.5rem 0; }
+    .nav-panel { display: none; position: absolute; top: 100%; left: 0; right: 0; width: 100%; background: var(--navy-l); border-top: 1px solid rgba(255,255,255,0.08); padding: 0.5rem 0; box-shadow: 0 8px 24px rgba(0,0,0,0.25); }
     #main-nav.nav-open .nav-panel { display: block; }
     .nav-links { flex-direction: column; gap: 0; }
-    .nav-links a { display: block; padding: 0.75rem 1.25rem; font-size: 0.9rem; }
+    .nav-links a { display: block; padding: 0.85rem 1.25rem; font-size: 0.95rem; white-space: normal; }
     .highlight-row, .pain-grid, .mech-grid, .strat-row, .rules-grid, .risk-split, .stress-grid, .alloc-layout, .terms-grid, .close-grid, .edge-block { grid-template-columns: 1fr; }
     .team-photo-lg { width: 150px; height: 150px; }
     .team-showcase { gap: 2.5rem; }
     .edge-num { font-size: 4rem; }
-    .container { padding: 0 1.25rem; }
+    .container, .container-wide { width: 100%; max-width: 100%; padding: 0 1.25rem; }
+    section { padding: 3.5rem 0; }
+    #hero { padding: 5.5rem 0 3.5rem; }
+    #team { padding: 3.5rem 0; }
+    h2 { font-size: 1.65rem; }
+    .capacity-band { padding: 1.25rem 1rem; }
+  }
+
+  @media (max-width: 640px) {
+    .hero-logo { display: none; }
+    .nav-logo { height: 34px; }
+    .nav-inner { padding: 0 0.85rem; height: 52px; }
+    .nav-overlay { top: 52px; }
+    #hero { padding: 4.75rem 0 3rem; }
+    .hero-eyebrow { font-size: 0.65rem; letter-spacing: 0.1em; margin-bottom: 1rem; }
+    .hero-title { font-size: clamp(1.65rem, 7.5vw, 2.15rem); line-height: 1.2; padding: 0 0.25rem; }
+    .hero-sub { font-size: 0.95rem; line-height: 1.55; margin-bottom: 1.5rem; padding: 0 0.25rem; }
+    .hero-cta { display: block; width: 100%; max-width: 300px; margin: 0 auto; text-align: center; padding: 0.95rem 1.5rem; }
+    .hero-disclaimer { font-size: 0.75rem; padding: 0 0.5rem; }
+    .container, .container-wide { padding: 0 1rem; }
+    section { padding: 2.75rem 0; }
+    h2 { font-size: 1.45rem; }
+    h3 { font-size: 1.05rem; }
+    .section-sub { font-size: 0.92rem; margin-bottom: 1.75rem; }
+    .team-member { flex: 1 1 100%; }
+    .team-photo-lg { width: 170px; height: 170px; }
+    .team-showcase { flex-direction: column; align-items: center; gap: 2rem; }
+    .highlight-card { padding: 1.25rem 1.1rem; }
+    .pain-stat { font-size: 1.65rem; }
+    .metric-val { font-size: 1.45rem; }
+    .close-val { font-size: 1.65rem; }
+    .footer-logo { width: 110px; }
+    .etf-table, .results-table, .crisis-table, .ctrl-table, .alloc-table { font-size: 0.8rem; }
+    .formula-box { padding: 1rem; }
+    .formula-box code { font-size: 0.78rem; }
   }
 </style>
 </head>
 <body>
 
 <nav id="main-nav">
-  <div class="nav-bar">
+  <div class="nav-inner">
     <a class="nav-brand" href="#hero" aria-label="Alpha Ridge Capital home">
       <img class="nav-logo" src="logo.png" alt="Alpha Ridge Capital">
     </a>
@@ -339,7 +382,7 @@
     <h3 style="margin-bottom:1rem;">Ten liquid ETFs · one transparent signal</h3>
     <p class="section-sub" style="margin-bottom:1.5rem;">Signal at month-end <em>t</em>, executed at open of <em>t+1</em>; strictly no look-ahead bias. Four asset classes.</p>
     <div class="strat-row">
-      <table class="etf-table">
+      <div class="table-scroll"><table class="etf-table">
         <thead><tr><th>Ticker</th><th>Exposure</th><th>Class</th></tr></thead>
         <tbody>
           <tr><td class="etf-ticker">SPY</td><td>S&amp;P 500</td><td><span class="asset-tag at-eq">Equity</span></td></tr>
@@ -353,7 +396,7 @@
           <tr><td class="etf-ticker">USO</td><td>Crude Oil</td><td><span class="asset-tag at-cmd">Commodity</span></td></tr>
           <tr><td class="etf-ticker">UUP</td><td>USD Index</td><td><span class="asset-tag at-fx">FX</span></td></tr>
         </tbody>
-      </table>
+      </table></div>
       <div class="formula-box">
         <div class="formula-label">Signal (month-end t)</div>
         <code>signal(i,t) = sign( avg(MA10, MA12)(i,t) − Price(i,t) )</code>
@@ -374,7 +417,7 @@
 
     <h3 style="margin-bottom:1rem;">Risk is engineered in, and we know what breaks it</h3>
     <div class="risk-split">
-      <table class="ctrl-table">
+      <div class="table-scroll"><table class="ctrl-table">
         <thead><tr><th>Control</th><th>Level</th></tr></thead>
         <tbody>
           <tr><td>Volatility target</td><td>10% per asset (~14% portfolio)</td></tr>
@@ -383,7 +426,7 @@
           <tr><td>Rebalance</td><td>Monthly · systematic</td></tr>
           <tr><td>Correlation vs 60/40</td><td><strong>−0.23</strong> (full sample)</td></tr>
         </tbody>
-      </table>
+      </table></div>
       <div class="risk-box warn">
         <strong>What breaks the strategy:</strong> Sharp trend reversals and whipsaws (2009 V-recovery, 2020 COVID round-trip). Crucially, our drawdowns cluster in <em>trendless</em> markets, not during equity crises, so they do not overlap a 60/40’s losses.
       </div>
@@ -398,7 +441,7 @@
     <div class="divider"></div>
     <p class="section-sub">Period: 2006–2024 · IS: 2006–2019 · OOS: 2020–2024 · Costs: 5 bps/side. All returns net.</p>
 
-    <table class="results-table">
+    <div class="table-scroll"><table class="results-table">
       <thead>
         <tr><th></th><th>CAGR</th><th>Ann. Vol</th><th>Sharpe</th><th>Max DD</th><th>Calmar</th><th>Hit Rate</th></tr>
       </thead>
@@ -408,7 +451,7 @@
         <tr class="strategy oos"><td><strong>Strategy Net, OOS 2020–24</strong></td><td><strong>7.02%</strong></td><td><strong>15.8%</strong></td><td class="text-blue"><strong>0.45</strong></td><td class="text-red"><strong>−29.5%</strong></td><td><strong>0.24</strong></td><td><strong>53.3%</strong></td></tr>
         <tr><td>60/40 Bench, Full 2006–24</td><td>7.90%</td><td>9.4%</td><td>0.84</td><td class="text-red">−29.5%</td><td>0.27</td><td>66.8%</td></tr>
       </tbody>
-    </table>
+    </table></div>
 
     <div class="insight-box">
       <strong>Honest read:</strong> We trail 60/40 on standalone growth by design. Value is diversification: correlation with 60/40 is <strong>−0.23</strong>. OOS Sharpe (0.45) exceeds IS (0.39); robust, not curve-fit.
@@ -477,14 +520,14 @@
           <div class="metric-box"><div class="metric-val text-red" id="mDD">−15.4%</div><div class="metric-lbl">Max Drawdown</div><div class="metric-delta" id="dDD"></div></div>
           <div class="metric-box"><div class="metric-val" id="mVol">7.41%</div><div class="metric-lbl">Ann. Volatility</div><div class="metric-delta" id="dVol"></div></div>
         </div>
-        <table class="crisis-table">
+        <div class="table-scroll"><table class="crisis-table">
           <thead><tr><th>Crisis</th><th>Pure 60/40</th><th id="blendedLabel">80/20</th><th>Delta</th></tr></thead>
           <tbody>
             <tr><td>GFC 2008–09</td><td class="text-red">−3.9%</td><td id="c1" class="text-green">+1.6%</td><td id="d1" class="text-green">+5.5 pp</td></tr>
             <tr><td>COVID 2020</td><td>+16.0%</td><td id="c2">+18.5%</td><td id="d2" class="text-green">+2.5 pp</td></tr>
             <tr><td>2022 Rate-Hike</td><td class="text-red">−16.7%</td><td id="c3" class="text-green">−10.9%</td><td id="d3" class="text-green">+5.8 pp</td></tr>
           </tbody>
-        </table>
+        </table></div>
         <div class="why-20">
           <strong>Why 20% (not 30% where Sharpe peaks):</strong> Conservative entry, easily scalable, leaves room for other alternatives. Sharpe +25% (0.84→1.05), max DD halved (−29.5%→−15.4%), CAGR cost only −11 bps.
         </div>

@@ -54,7 +54,7 @@
     .nav-toggle { display: none !important; }
     .nav-links { justify-content: flex-end; }
   }
-  .nav-overlay { display: none; position: fixed; inset: 0; top: 56px; background: rgba(5,28,44,0.45); }
+  .nav-overlay { display: none; position: fixed; inset: 0; top: 56px; background: rgba(5,28,44,0.45); z-index: 1; }
   #main-nav.nav-open .nav-overlay { display: block; }
 
   #hero {
@@ -215,7 +215,12 @@
 
   @media (max-width: 960px) {
     .nav-toggle { display: flex; align-items: center; justify-content: center; }
-    .nav-panel { display: none; position: absolute; top: 100%; left: 0; right: 0; width: 100%; background: var(--navy-l); border-top: 1px solid rgba(255,255,255,0.08); padding: 0.5rem 0; box-shadow: 0 8px 24px rgba(0,0,0,0.25); }
+    .nav-panel {
+      display: none; position: absolute; top: 100%; left: 0; right: 0; width: 100%;
+      background: var(--navy-l); border-top: 1px solid rgba(255,255,255,0.08);
+      padding: 0.5rem 0; box-shadow: 0 8px 24px rgba(0,0,0,0.25); z-index: 3;
+    }
+    #main-nav.nav-open .nav-inner { z-index: 4; }
     #main-nav.nav-open .nav-panel { display: block; }
     .nav-links { flex-direction: column; gap: 0; }
     .nav-links a { display: block; padding: 0.85rem 1.25rem; font-size: 0.95rem; white-space: normal; }
@@ -723,14 +728,37 @@ slider.dispatchEvent(new Event('input'));
   const nav = document.getElementById('main-nav');
   const toggle = document.getElementById('nav-toggle');
   const overlay = document.getElementById('nav-overlay');
+  const navHeight = () => nav.getBoundingClientRect().height;
+
   function setOpen(open) {
     nav.classList.toggle('nav-open', open);
-    toggle.setAttribute('aria-expanded', open);
+    toggle.setAttribute('aria-expanded', String(open));
     document.body.style.overflow = open ? 'hidden' : '';
   }
+
+  function scrollToSection(link) {
+    const href = link.getAttribute('href');
+    if (!href || !href.startsWith('#')) return;
+    const target = document.querySelector(href);
+    if (!target) return;
+    const top = target.getBoundingClientRect().top + window.scrollY - navHeight() - 8;
+    window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+    history.replaceState(null, '', href);
+  }
+
   toggle.addEventListener('click', () => setOpen(!nav.classList.contains('nav-open')));
   overlay.addEventListener('click', () => setOpen(false));
-  nav.querySelectorAll('.nav-links a').forEach(a => a.addEventListener('click', () => setOpen(false)));
+
+  nav.querySelectorAll('.nav-links a, .nav-brand').forEach(link => {
+    link.addEventListener('click', (e) => {
+      const href = link.getAttribute('href');
+      if (!href || !href.startsWith('#')) return;
+      e.preventDefault();
+      setOpen(false);
+      requestAnimationFrame(() => scrollToSection(link));
+    });
+  });
+
   document.addEventListener('keydown', e => { if (e.key === 'Escape') setOpen(false); });
 })();
 </script>

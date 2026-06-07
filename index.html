@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Alpha Ridge Capital · ESADE Asset Management</title>
-<link rel="icon" href="alpha-ridge-logo.png" type="image/png">
+<link rel="icon" href="logo.jpeg" type="image/jpeg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Georgia:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
@@ -35,7 +35,7 @@
   #main-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: var(--navy); box-shadow: 0 2px 12px rgba(0,0,0,0.3); }
   .nav-bar { display: flex; align-items: center; justify-content: space-between; padding: 0 1.5rem; height: 52px; position: relative; }
   .nav-brand { display: flex; align-items: center; text-decoration: none; flex-shrink: 0; }
-  .nav-logo { height: 40px; width: auto; display: block; }
+  .nav-logo { height: 40px; width: auto; display: block; border-radius: 4px; }
   .nav-links { display: flex; gap: 1rem; list-style: none; }
   .nav-links a { color: #8AABB8; text-decoration: none; font-size: 0.78rem; font-weight: 500; white-space: nowrap; }
   .nav-links a:hover { color: var(--white); }
@@ -63,6 +63,7 @@
   .hero-logo {
     width: clamp(160px, 24vw, 220px); height: auto;
     margin: 0 auto 1.75rem; display: block;
+    border-radius: 8px; box-shadow: 0 8px 28px rgba(0,0,0,0.22);
   }
   .hero-eyebrow { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em; color: #6A8CA0; text-transform: uppercase; margin-bottom: 1.25rem; }
   .hero-title { font-family: Georgia, serif; font-size: clamp(2.4rem, 5.5vw, 3.75rem); font-weight: 700; color: var(--white); line-height: 1.12; margin-bottom: 1rem; max-width: 820px; margin-left: auto; margin-right: auto; }
@@ -187,7 +188,7 @@
   .close-tag { text-align: center; color: #8AABB8; font-size: 1rem; margin-top: 2.5rem; max-width: 640px; margin-left: auto; margin-right: auto; }
 
   footer { background: #03111C; padding: 2.25rem 0; text-align: center; color: #3A5568; font-size: 0.76rem; }
-  .footer-logo { width: 130px; height: auto; margin: 0 auto 1.25rem; display: block; opacity: 0.92; }
+  .footer-logo { width: 130px; height: auto; margin: 0 auto 1.25rem; display: block; border-radius: 6px; opacity: 0.95; }
 
   @media (max-width: 960px) {
     .nav-toggle { display: flex; align-items: center; justify-content: center; }
@@ -208,7 +209,7 @@
 <nav id="main-nav">
   <div class="nav-bar">
     <a class="nav-brand" href="#hero" aria-label="Alpha Ridge Capital home">
-      <img class="nav-logo" src="alpha-ridge-logo.png" alt="Alpha Ridge Capital">
+      <img class="nav-logo" src="logo.jpeg" alt="Alpha Ridge Capital">
     </a>
     <div class="nav-panel" id="nav-panel">
       <ul class="nav-links">
@@ -229,7 +230,7 @@
 
 <section id="hero">
   <div class="container hero-inner">
-    <img class="hero-logo" src="alpha-ridge-logo.png" alt="Alpha Ridge Capital logo">
+    <img class="hero-logo" src="logo.jpeg" alt="Alpha Ridge Capital logo">
     <p class="hero-eyebrow">ESADE Asset Management · June 2026</p>
     <h1 class="hero-title">Convex, uncorrelated crisis protection for institutional portfolios</h1>
     <p class="hero-sub">Alpha Ridge Capital, a multi-asset trend-following CTA raising USD 100,000,000. Simulated back-test only; academic pitch.</p>
@@ -532,7 +533,7 @@
 
 <footer>
   <div class="container">
-    <img class="footer-logo" src="alpha-ridge-logo.png" alt="Alpha Ridge Capital">
+    <img class="footer-logo" src="logo.jpeg" alt="Alpha Ridge Capital">
     <p>Alpha Ridge Capital · ESADE Asset Management · June 2026</p>
     <p style="margin-top:0.4rem;">Simulated back-test only. Not investment advice. Academic purposes only.</p>
   </div>
